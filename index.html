@@ -3,50 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABLAVI STORE</title>
+<title>ABLAVI STORE - Gloss, Sacs & Bijoux</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#fff5f7}
-header{background:#d63384;color:#fff;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
-header h1{font-size:22px}
-.banner{background:#ffe0ec;padding:15px;text-align:center;font-size:14px}
-#produits{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+header{background:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 20px;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.logo{font-weight:900;color:#d63384;font-size:20px}
+.logo span{color:#111}
+nav a{margin:0 8px;text-decoration:none;color:#333;font-size:12px;font-weight:bold}
+nav a.active{color:#d63384}
+.hero{background:linear-gradient(135deg,#ff5da2,#ff8ac0);color:#fff;text-align:center;padding:45px 15px}
+.hero h1{font-size:28px;margin:10px 0}
+.hero p{font-size:14px;opacity:.95}
+.btn-white{background:#fff;color:#d63384;border:0;padding:12px 22px;border-radius:25px;font-weight:bold;margin-top:15px}
+.cats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:15px}
+.cats button{border:1px solid #ffd0e0;background:#fff;padding:8px 16px;border-radius:20px;font-size:13px}
+.cats button.active{background:#d63384;color:#fff}
+.section{padding:15px}
+.section h2{text-align:center;margin-bottom:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr 1fr}}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08);position:relative}
 .card img{width:100%;height:180px;object-fit:cover}
-.card-body{padding:10px}
-.prix{color:#d63384;font-weight:bold;font-size:16px}
-.ancien{text-decoration:line-through;color:#999;font-size:13px}
-.btn{width:100%;background:#25D366;color:#fff;border:0;padding:10px;border-radius:8px;font-weight:bold;margin-top:8px}
-.btn2{width:100%;background:#d63384;color:#fff;border:0;padding:10px;border-radius:8px;font-weight:bold;margin-top:5px}
-#panier{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px;box-shadow:0 -2px 10px rgba(0,0,0,.15);display:none}
-input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
-.section{padding:15px;background:#fff;margin:12px;border-radius:12px}
+.card-body{padding:12px}
+.prix{color:#d63384;font-weight:900}
+.ancien{text-decoration:line-through;color:#999;font-size:12px}
+.badge{position:absolute;top:10px;left:10px;background:#d63384;color:#fff;font-size:11px;padding:4px 8px;border-radius:10px}
+.btn{width:100%;background:#d63384;color:#fff;border:0;padding:10px;border-radius:20px;font-weight:bold;margin-top:8px}
+.btn-green{background:#25D366}
+.box{background:#fff;margin:15px;padding:18px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #eee;border-radius:10px}
+.pinkbar{background:#ffc0da;height:8px;border-radius:10px;margin:10px 0}
+#panier{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:14px;box-shadow:0 -3px 15px rgba(0,0,0,.18);display:none;z-index:30;max-height:70vh;overflow:auto}
+footer{background:#111;color:#fff;text-align:center;padding:20px;font-size:13px;margin-top:20px}
 </style>
 </head>
 <body>
-<header><h1>✨ ABLAVI STORE ✨</h1><p>Robes • Perruques • Sacs - San Pedro & partout en Côte d'Ivoire</p></header>
-<div class="banner">🚚 <b>Livraison San Pedro à partir de 1000 FCFA</b> | Autres villes à partir de 5000 FCFA<br>💳 Paiement à la livraison - Orange Money / Wave / MTN MoMo</div>
-<div id="produits">Chargement...</div>
-<div class="section"><h2>⭐ Laisser un avis</h2><input id="avisNom" placeholder="Ton nom"><input id="avisProduit" placeholder="Quel produit ?"><select id="avisNote"><option value="5">⭐⭐⭐⭐⭐ 5</option><option value="4">⭐⭐⭐⭐ 4</option><option value="3">⭐⭐⭐ 3</option></select><textarea id="avisMsg" placeholder="Ton avis..."></textarea><button class="btn2" onclick="envoyerAvis()">Envoyer mon avis</button></div>
-<div class="section"><h2>⭐ Avis de nos clientes</h2><div id="listeAvis">Chargement...</div></div>
-<div id="panier"><h3>🛒 Ma commande</h3><div id="panierContenu"></div><input id="nomClient" placeholder="Ton nom complet"><input id="telClient" placeholder="Ton numéro WhatsApp"><select id="ville"><option value="San Pedro">San Pedro - 1000 FCFA</option><option value="Abidjan">Abidjan - 5000 FCFA</option><option value="Autre ville">Autre ville - 5000 FCFA</option></select><input id="adresse" placeholder="Ton quartier / Adresse"><select id="paiement"><option>Paiement à la livraison</option><option>Orange Money</option><option>Wave</option><option>MTN MoMo</option></select><button class="btn" onclick="validerCommande()">✅ Commander sur WhatsApp + Enregistrer</button></div>
+<header><div class="logo">ABLAVI <span>STORE</span></div><nav><a href="#" class="active">ACCUEIL</a><a href="#articles">NOS ARTICLES</a><a href="#avis">AVIS CLIENT</a><a href="#aide">AIDE</a><a href="#suivi">SUIVI COMMANDE</a></nav></header>
+
+<div class="hero">
+<div style="background:#fff;color:#d63384;display:inline-block;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:bold">✨ Nouvelle Collection</div>
+<h1>Gloss, Sacs & Bijoux pour Femme</h1>
+<p>Les plus beaux produits pour sublimer ton look au quotidien. Qualité garantie, livraison rapide partout en Côte d'Ivoire.</p>
+<button class="btn-white" onclick="document.getElementById('articles').scrollIntoView({behavior:'smooth'})">Voir Nos Articles ↓</button>
+</div>
+
+<div class="cats">
+<button class="active" onclick="filtrer('Tout',this)">Tout</button>
+<button onclick="filtrer('Gloss',this)">Gloss</button>
+<button onclick="filtrer('Sacs',this)">Sacs</button>
+<button onclick="filtrer('Bijoux',this)">Bijoux</button>
+<button onclick="filtrer('Robes',this)">Robes</button>
+<button onclick="filtrer('Perruques',this)">Perruques</button>
+</div>
+
+<div class="section" id="articles"><h2>Nos Articles</h2><div style="text-align:center;font-size:13px;color:#666">🚚 Livraison San Pedro à partir de 1000 FCFA | Autres villes à partir de 5000 FCFA</div><div class="grid" id="produits" style="margin-top:15px">Chargement de tes produits...</div></div>
+
+<div class="box" id="suivi"><h2 style="color:#d63384;text-align:center">Suivi de Commande</h2><p style="text-align:center;font-size:13px">Entre ton numéro de commande pour voir où en est ton colis. Ex: ABLAVI 1234</p><div class="pinkbar"></div><input id="numSuivi" placeholder="Ex: ABLAVI 1234"><button class="btn" onclick="suivre()">Suivre Ma Commande</button><div id="resSuivi"></div></div>
+
+<div class="box" id="avis"><h2>⭐ Laisser un avis</h2><input id="avisNom" placeholder="Ton nom"><input id="avisProduit" placeholder="Quel produit ?"><select id="avisNote"><option value="5">⭐⭐⭐⭐⭐ 5</option><option value="4">⭐⭐⭐⭐ 4</option><option value="3">⭐⭐⭐ 3</option></select><textarea id="avisMsg" placeholder="Ton avis..."></textarea><button class="btn" onclick="envoyerAvis()">Envoyer mon avis</button><h3 style="margin-top:15px">Avis de nos clientes</h3><div id="listeAvis">Chargement...</div></div>
+
+<div class="box" id="aide"><h2 style="color:#d63384;text-align:center">Aide</h2><p style="text-align:center">Tu as un problème ? Recherche ici.</p><input placeholder="Recherche ton problème..."><h3>Comment Commander ? En 4 Étapes</h3><p style="font-size:13px;line-height:1.7">1. Choisis ton produit<br>2. Ajoute au panier<br>3. Remplis nom + adresse<br>4. Commande sur WhatsApp</p></div>
+
+<div id="panier"><h3>🛒 Ma commande</h3><div id="panierContenu"></div><input id="nomClient" placeholder="Ton nom complet"><input id="telClient" placeholder="Ton numéro WhatsApp"><select id="ville"><option value="San Pedro">San Pedro - 1000 FCFA</option><option value="Abidjan">Abidjan - 5000 FCFA</option><option value="Autre ville">Autre ville - 5000 FCFA</option></select><input id="adresse" placeholder="Ton quartier / Adresse"><select id="paiement"><option>Paiement à la livraison</option><option>Orange Money</option><option>Wave</option><option>MTN MoMo</option></select><button class="btn btn-green" onclick="validerCommande()">✅ Commander sur WhatsApp + Enregistrer</button></div>
+
+<footer>ABLAVI STORE - San Pedro, Côte d'Ivoire<br>© 2026 ABLAVI STORE</footer>
+
 <script>
-const API = "https://script.google.com/macros/s/AKfycbyyf-48uFwfKk8irLMPg-Jv6xZmc2lbh1sTV6Wj3Ves8DOnFKNwGdda8EqlSoAKsy__/exec";
-const WHATSAPP_NUMERO = "2250000000000";
-let panier=[]; let produitsData=[];
+const API="https://script.google.com/macros/s/AKfycbyyf-48uFwfKk8irLMPg-Jv6xZmc2lbh1sTV6Wj3Ves8DOnFKNwGdda8EqlSoAKsy__/exec";
+const WHATSAPP_NUMERO="2250000000000";
+let panier=[]; let produitsData=[]; let catActuelle="Tout";
 async function charger(){
-  try{
-    let r=await fetch(API+"?action=produits"); produitsData=await r.json();
-    let html=""; produitsData.forEach(p=>{ let rupture=p.stock<=0?"<span style='color:red'>Rupture</span>":`<span style='color:green'>En stock: ${p.stock}</span>`; html+=`<div class='card'><img src='${p.image}'><div class='card-body'><h3>${p.nom}</h3><div class='prix'>${p.prix} FCFA <span class='ancien'>${p.ancienPrix||''} FCFA</span></div><div>${rupture}</div><p style='font-size:12px;color:#666'>${p.description||''}</p><button class='btn2' onclick='ajouter(${p.id})' ${p.stock<=0?'disabled':''}>+ Ajouter au panier</button></div></div>`; });
-    document.getElementById('produits').innerHTML=html;
-    let r2=await fetch(API+"?action=avis"); let avis=await r2.json();
-    document.getElementById('listeAvis').innerHTML=avis.map(a=>`<div><b>${a.nom}</b> - ${a.produit} - ${'⭐'.repeat(a.note||5)}<br>${a.message}<hr></div>`).join('')||"Pas encore d'avis";
-  }catch(e){ document.getElementById('produits').innerHTML="Erreur chargement"; }
+ try{
+  let r=await fetch(API+"?action=produits"); produitsData=await r.json();
+  afficherProduits();
+  let r2=await fetch(API+"?action=avis"); let avis=await r2.json();
+  document.getElementById('listeAvis').innerHTML=avis.map(a=>`<div><b>${a.nom}</b> - ${a.produit} - ${'⭐'.repeat(a.note||5)}<br>${a.message}<hr></div>`).join('')||"Pas encore d'avis";
+ }catch(e){ document.getElementById('produits').innerHTML="Erreur chargement. Vérifie ton tableau Google."; }
 }
+function afficherProduits(){
+ let liste=produitsData.filter(p=>catActuelle==="Tout"||(p.categorie||"").toLowerCase().includes(catActuelle.toLowerCase()));
+ if(!liste.length){ document.getElementById('produits').innerHTML="<p>Aucun produit dans cette catégorie pour le moment.</p>"; return; }
+ document.getElementById('produits').innerHTML=liste.map(p=>`<div class="card"><span class="badge">Nouveau</span><img src="${p.image}"><div class="card-body"><h3 style="font-size:14px">${p.nom}</h3><p style="font-size:12px;color:#888">${p.description||''}</p><div class="prix">${p.prix} FCFA <span class="ancien">${p.ancienPrix? p.ancienPrix+' FCFA':''}</span></div><div style="font-size:12px;color:${p.stock>0?'green':'red'}">${p.stock>0?'En stock: '+p.stock:'Rupture'}</div><button class="btn" onclick="ajouter(${p.id})" ${p.stock<=0?'disabled':''}>+ Ajouter au panier</button></div></div>`).join('');
+}
+function filtrer(c,btn){ catActuelle=c; document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); afficherProduits(); }
 function ajouter(id){ let p=produitsData.find(x=>x.id==id); panier.push(p); afficherPanier(); }
-function afficherPanier(){ document.getElementById('panier').style.display='block'; let total=0; let html=panier.map(p=>{total+=Number(p.prix); return `<div>${p.nom} - ${p.prix} FCFA</div>`}).join(''); let ville=document.getElementById('ville')?.value||"San Pedro"; let livraison=ville==="San Pedro"?1000:5000; document.getElementById('panierContenu').innerHTML=html+`<b>Livraison: ${livraison} FCFA</b><br><b>Total: ${total+livraison} FCFA</b>`; window.totalCommande=total+livraison; window.livraison=livraison; }
-async function validerCommande(){ let nom=document.getElementById('nomClient').value; let tel=document.getElementById('telClient').value; let ville=document.getElementById('ville').value; let adresse=document.getElementById('adresse').value; let paiement=document.getElementById('paiement').value; if(!nom||!tel||!adresse){alert("Remplis nom, téléphone et adresse");return;} let idCmd="ABL"+Date.now(); let produitsTxt=panier.map(p=>p.nom).join(", "); await fetch(API,{method:"POST",body:JSON.stringify({type:"commande",idCommande:idCmd,nomClient:nom,telephone:tel,produits:produitsTxt,total:window.totalCommande,paiement:paiement,adresse:ville+" - "+adresse,produitNom:panier[0].nom,quantite:panier.length})}); let msg=`Bonjour ABLAVI STORE! Je veux commander:%0A%0ACommande ${idCmd}%0A${produitsTxt}%0A%0ANom: ${nom}%0ATel: ${tel}%0AVille: ${ville}%0AAdresse: ${adresse}%0APaiement: ${paiement}%0ATotal: ${window.totalCommande} FCFA (livraison ${window.livraison} incluse)`; window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`,"_blank"); alert("Commande enregistrée dans ton tableau !"); panier=[]; afficherPanier(); }
+function afficherPanier(){ if(!panier.length) return; document.getElementById('panier').style.display='block'; let total=0; let html=panier.map(p=>{total+=Number(p.prix); return `<div>${p.nom} - ${p.prix} FCFA</div>`}).join(''); let ville=document.getElementById('ville')?.value||"San Pedro"; let liv=ville==="San Pedro"?1000:5000; document.getElementById('panierContenu').innerHTML=html+`<b>Livraison: ${liv} FCFA</b><br><b>Total: ${total+liv} FCFA</b>`; window.totalCommande=total+liv; window.livraison=liv; }
+async function validerCommande(){ let nom=document.getElementById('nomClient').value; let tel=document.getElementById('telClient').value; let ville=document.getElementById('ville').value; let adresse=document.getElementById('adresse').value; let paiement=document.getElementById('paiement').value; if(!nom||!tel||!adresse){alert("Remplis nom, téléphone et adresse");return;} let idCmd="ABL"+Date.now(); let produitsTxt=panier.map(p=>p.nom).join(", "); await fetch(API,{method:"POST",body:JSON.stringify({type:"commande",idCommande:idCmd,nomClient:nom,telephone:tel,produits:produitsTxt,total:window.totalCommande,paiement:paiement,adresse:ville+" - "+adresse,produitNom:panier[0].nom,quantite:panier.length})}); let msg=`Bonjour ABLAVI STORE! Je veux commander:%0A%0ACommande ${idCmd}%0A${produitsTxt}%0A%0ANom: ${nom}%0ATel: ${tel}%0AVille: ${ville}%0AAdresse: ${adresse}%0APaiement: ${paiement}%0ATotal: ${window.totalCommande} FCFA (livraison ${window.livraison} incluse)`; window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`,"_blank"); alert("Commande enregistrée !"); panier=[]; document.getElementById('panier').style.display='none'; }
 async function envoyerAvis(){ let nom=document.getElementById('avisNom').value; let produit=document.getElementById('avisProduit').value; let note=document.getElementById('avisNote').value; let message=document.getElementById('avisMsg').value; if(!nom||!message){alert("Mets nom et message");return;} await fetch(API,{method:"POST",body:JSON.stringify({type:"avis",nom,produit,note,message})}); alert("Merci pour ton avis !"); charger(); }
+async function suivre(){ let n=document.getElementById('numSuivi').value; if(!n){alert("Mets ton numéro");return;} let r=await fetch(API+"?action=suivi&numero="+encodeURIComponent(n)); let d=await r.json(); document.getElementById('resSuivi').innerHTML=d.trouve? `<p><b>Commande ${n}</b><br>Statut: ${d.statut}<br>Total: ${d.total} FCFA</p>` : "<p>Commande non trouvée. Vérifie ton numéro.</p>"; }
 document.getElementById('ville')?.addEventListener('change',afficherPanier); charger();
 </script>
 </body>
