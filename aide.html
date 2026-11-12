@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aide & FAQ - ABLAVI STORE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">ABLAVI<span>STORE</span></div>
+    <nav>
+      <a href="index.html">ACCUEIL</a>
+      <a href="apropos.html">À PROPOS</a>
+      <a href="avis.html">AVIS CLIENT</a>
+      <a href="contact.html">CONTACT</a>
+      <a href="aide.html" class="actif">AIDE</a>
+      <a href="suivi.html">SUIVI COMMANDE</a>
+    </nav>
+    <a href="index.html" class="btn-boutique">🛍️ Voir la boutique</a>
+  </header>
+
+  <main class="page-apropos">
+    <div class="titre-page">
+      <h1>Aide </h1>
+      <p>Tu as une question ? Trouve ta réponse ici, en 1 minute. Sinon, écris-nous sur WhatsApp.</p>
+    </div>
+
+    <!-- RECHERCHE -->
+    <section class="bloc">
+      <h2>Recherche Ton Problème</h2>
+      <input type="text" id="recherche-aide" placeholder="Ex : livraison, paiement, retour, stock..." class="input-panier" onkeyup="rechercherAide()">
+      <p id="resultat-recherche" style="font-size:14px; color:#666;"></p>
+    </section>
+
+    <!-- COMMENT COMMANDER -->
+    <section class="bloc">
+      <h2>Comment Commander ? En 4 Étapes</h2>
+      <div class="grille-objectifs">
+        <div class="carte-objectif">
+          <span class="icone-objectif">1️⃣</span>
+          <h3>1. Choisis ton produit</h3>
+          <p>Va sur la boutique, choisis ton gloss, sac ou accessoire, choisis la quantité et clique sur Ajouter au panier.</p>
+        </div>
+        <div class="carte-objectif">
+          <span class="icone-objectif">2️⃣</span>
+          <h3>2. Ouvre ton panier</h3>
+          <p>Clique sur Panier en haut. Vérifie tes articles, mets ton code promo si tu en as un.</p>
+        </div>
+        <div class="carte-objectif">
+          <span class="icone-objectif">3️⃣</span>
+          <h3>3. Remplis tes infos</h3>
+          <p>Mets ton nom, ton numéro WhatsApp et ta commune. Choisis Orange Money.</p>
+        </div>
+        <div class="carte-objectif">
+          <span class="icone-objectif">4️⃣</span>
+          <h3>4. Paye et attends</h3>
+          <p>Coche les conditions et clique sur PAYER MAINTENANT. On te contacte sur WhatsApp pour la livraison.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="bloc">
+      <h2>Questions Fréquentes</h2>
+      <div id="liste-faq">
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>🚚 Combien coûte la livraison ?</strong></p>
+          <p style="color:#555;">La livraison coûte 1000 F CFA. Elle est affichée dans ton panier avant de payer. Livraison en 24h à 48h à San Pedro.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>💳 Comment je paye ?</strong></p>
+          <p style="color:#555;">Tu as 2 choix : Orange Money, Wave. Tu choisis dans ton panier avant de payer.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>❌ Que faire si un produit est en rupture de stock ?</strong></p>
+          <p style="color:#555;">Si c'est écrit "Stock épuisé", tu ne peux pas le commander. Écris-nous sur WhatsApp, on te dira quand on va restocker.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>🎁 Comment utiliser un code promo ?</strong></p>
+          <p style="color:#555;">Dans ton panier, il y a une case "Code promo". Écris ton code, ex : ABLAVI10, clique sur Appliquer. La réduction s'enlève toute seule du total.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>🔄 Puis-je retourner un produit ?</strong></p>
+          <p style="color:#555;">Oui, si le produit est défectueux. Envoie-nous une photo sur WhatsApp dans les 24h après la livraison. On trouve une solution. Pas de remboursement après confirmation et envoi si le produit n'a pas de problème.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>📦 Comment suivre ma commande ?</strong></p>
+          <p style="color:#555;">Va sur la page Suivi Commande, mets ton numéro de commande, ex : ABLAVI-1234. Tu verras si c'est En préparation, En cours de livraison ou Livrée.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>📍 Vous livrez où ?</strong></p>
+          <p style="color:#555;">Partout à San Pedro et dans les grandes villes de Côte d'Ivoire : Abidjan, Yamoussoukro, Bouaké... Mets ta commune dans le panier, on te confirme.</p>
+        </div>
+        <div class="faq-item" style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid #FFE3EE;">
+          <p><strong>📱 Je n'ai pas reçu de confirmation, que faire ?</strong></p>
+          <p style="color:#555;">Vérifie ton WhatsApp. Si tu n'as rien reçu, écris-nous sur WhatsApp avec ton nom et ton numéro de commande, on vérifie pour toi.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAS TROUVÉ -->
+    <section class="bloc" style="text-align:center;">
+      <h2 style="display:block; text-align:center; border-bottom:none;">Tu N'as Pas Trouvé Ta Réponse ?</h2>
+      <p style="text-align:center;">Pas de panique, écris-nous, on te répond vite.</p>
+      <br>
+      <a href="https://wa.me/2250700000000?text=Bonjour%20ABLAVI%20STORE%2C%20j%27ai%20besoin%20d%27aide" target="_blank" class="btn-rose">💬 Demander de l'aide sur WhatsApp</a>
+      <br><br>
+      <a href="contact.html" class="btn-rose" style="background:white; color:#FF69B4; border:1px solid #FF69B4;">Aller sur la page Contact →</a>
+    </section>
+  </main>
+
+  <footer class="footer-ablavi">
+    <div class="footer-annuaire">
+      <h3 class="titre-annuaire">ANNUAIRE DES MARQUES</h3>
+      <p><strong>FASHION :</strong> <span>Gloss | Chouchou | Fleur Cheveux | Sacs | Bracelets</span></p>
+    </div>
+    <div class="footer-colonnes">
+      <div class="footer-col">
+        <h4>CATÉGORIES POPULAIRES</h4>
+        <a href="index.html">Gloss</a>
+        <a href="index.html">Chouchou</a>
+        <a href="index.html">Fleur Cheveux</a>
+        <a href="index.html">Sacs</a>
+        <a href="index.html">Bracelets</a>
+      </div>
+      <div class="footer-col">
+        <h4>NOTRE ENTREPRISE</h4>
+        <a href="apropos.html">Qui Sommes Nous ?</a>
+        <a href="avis.html">Laissez Nous Votre Témoignage</a>
+        <a href="aide.html">Aide </a>
+        <a href="suivi.html">Suivi Commande</a>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+        <a href="#">Livraison Rapide</a>
+        <a href="#">Paiement Sécurisé</a>
+        <a href="#">Service Client Disponible 24h/24</a>
+        <a href="#">Retour Facile sous 24h</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <p>📍 (+225) San Pedro - Cité,<br>Près du Collège La Ruche, Côte D'Ivoire</p>
+        <p>📞 +225 07 00 00 00 00</p>
+        <p>✉️ AblaviStore@Gmail.Com</p>
+        <a href="https://wa.me/2250700000000" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <p>Copyright © By THE BLACK ANGEL.</p>
+    </div>
+  </footer>
+
+  <script>
+    function rechercherAide() {
+      let mot = document.getElementById("recherche-aide").value.toLowerCase();
+      let items = document.querySelectorAll(".faq-item");
+      let trouves = 0;
+      items.forEach(item => {
+        let texte = item.textContent.toLowerCase();
+        if (texte.includes(mot)) { item.style.display = "block"; trouves++; }
+        else { item.style.display = "none"; }
+      });
+      let res = document.getElementById("resultat-recherche");
+      if (mot === "") { res.textContent = ""; return; }
+      if (trouves === 0) { res.textContent = "❌ Aucun résultat pour '" + mot + "'. Écris-nous sur WhatsApp, on t'aide."; }
+      else { res.textContent = "✅ " + trouves + " réponse(s) trouvée(s) pour '" + mot + "'"; }
+    }
+  </script>
+</body>
+</html>

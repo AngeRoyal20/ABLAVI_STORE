@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABLAVI STORE - Accessoires Femme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ====BANDEAU ===== -->
+<div class="bandeau-defilant">
+  <span id="texte-annonce">nous sommes ouverts</span>
+</div>
+
+  <header>
+    <div class="logo">ABLAVI<span>STORE</span></div>
+    <nav>
+      <a href="index.html" class="actif">ACCUEIL</a>
+      <a href="apropos.html">À PROPOS</a>
+      <a href="avis.html">AVIS CLIENT</a>
+      <a href="contact.html">CONTACT</a>
+      <a href="aide.html">AIDE</a>
+      <a href="suivi.html">SUIVI COMMANDE</a>
+    </nav>
+    <button id="btn-panier" onclick="afficherPanier()">🛍️ Panier (<span id="nb-panier">0</span>)</button>
+  </header>
+
+  <section class="hero">
+    <h1>Gloss, Sacs & Bijoux pour Femme</h1>
+    <p>Les plus beaux accessoires pour briller partout où que vous soyez . Qualité garantie, livraison rapide.</p>
+    <a href="#produits" class="btn-hero">Voir la boutique</a>
+  </section>
+
+  <section class="categories">
+    <button onclick="filtrer('tout')">Tout</button>
+    <button onclick="filtrer('gloss')">Gloss</button>
+    <button onclick="filtrer('chouchou')">Chouchou</button>
+    <button onclick="filtrer('fleur')">Fleur Cheveux</button>
+    <button onclick="filtrer('sac')">Sacs</button>
+    <button onclick="filtrer('bracelet')">Bracelets</button>
+    <button onclick="filtrer('autre')">Autres</button>
+  </section>
+
+  <main id="produits">
+    <h2>Nos Articles</h2>
+    <input type="text" id="recherche" placeholder="Rechercher gloss, sac..." onkeyup="rechercher()">
+    <div id="liste-produits" class="grille"></div>
+  </main>
+
+  <div id="panier-modal" class="modal-cache panier-modal-scroll">
+    <div class="modal-contenu panier-contenu">
+      <button onclick="fermerPanier()" class="btn-x">✕</button>
+      <h2 class="titre-panier">🛍️ Ton Panier</h2>
+      <div id="contenu-panier"></div>
+      <hr>
+      <p>Sous-total : <span id="sous-total">0</span> F CFA</p>
+      <p>Livraison : <span id="frais-livraison">1000</span> F CFA</p>
+      <p id="ligne-reduction" class="ligne-reduction">Réduction : -<span id="montant-reduction">0</span> F CFA</p>
+      <p><strong>Total à payer : <span id="total-panier">0</span> F CFA</strong></p>
+      <hr>
+      <div class="box-promo">
+        <label>🎁 Code promo :</label>
+        <div class="ligne-promo">
+          <input type="text" id="code-promo" placeholder="Ex: ABLAVI10">
+          <button onclick="appliquerPromo()" class="btn-appliquer">Appliquer</button>
+        </div>
+        <p id="message-promo" class="message-promo"></p>
+      </div>
+      <h3>Tes infos pour la livraison :</h3>
+      <input type="text" id="client-nom" placeholder="Ton nom complet" class="input-panier">
+      <input type="text" id="client-whatsapp" placeholder="Ton numéro WhatsApp ex: 0101538258" class="input-panier">
+      <input type="text" id="client-commune" placeholder="Ta commune / quartier ex: San Pedro - Cité" class="input-panier">
+      <h3>Choisis ton mode de paiement :</h3>
+      <label class="label-paiement orange"><input type="radio" name="paiement" value="Orange Money" checked> 🧡 Orange Money</label>
+      <label class="label-paiement bleu"><input type="radio" name="paiement" value="Wave"> 💙 Wave</label>
+      <br>
+      <label class="label-conditions">
+        <input type="checkbox" id="accepter-conditions"> J'ai lu et j'accepte les <a href="#" onclick="voirConditions(); return false;">conditions de paiement</a> : pas de remboursement après envoi, paiement vérifié avant livraison.
+      </label><br>
+      <div id="message-paiement" class="message-paiement"></div>
+      <div class="bas-panier">
+        <button class="btn-commander" onclick="payerCommande()">ENVOYEZ + LE REÇU DU DEPOT</button>
+        <button onclick="fermerPanier()" class="btn-fermer">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="conditions-modal" class="modal-cache">
+    <div class="modal-contenu modal-conditions">
+      <button onclick="fermerConditions()" class="btn-x">✕</button>
+      <h3>Conditions de Paiement - ABLAVI STORE</h3>
+      <p>1. Le paiement doit être effectué avant la livraison.</p>
+      <p>2. Aucun remboursement n'est possible après validation de la commande.</p>
+      <p>3. Si le produit est défectueux, contacte-nous dans les 24h sur WhatsApp avec photo.</p>
+      <p>4. La livraison se fait sous 24h à 48h.</p>
+      <p>5. Numéro officiel ABLAVI STORE : +225 01 01 53 82 58</p>
+      <button onclick="fermerConditions()">J'ai compris</button>
+    </div>
+  </div>
+
+  <footer class="footer-ablavi">
+    <div class="footer-annuaire">
+      <h3 class="titre-annuaire">ANNUAIRE DES MARQUES</h3>
+      <p><strong>FASHION :</strong> <span>Gloss | Chouchou | Fleur Cheveux | Sacs | Bracelets</span></p>
+    </div>
+    <div class="footer-colonnes">
+      <div class="footer-col">
+        <h4>CATÉGORIES POPULAIRES</h4>
+        <a href="#" onclick="filtrer('gloss'); return false;">Gloss</a>
+        <a href="#" onclick="filtrer('chouchou'); return false;">Chouchou</a>
+        <a href="#" onclick="filtrer('fleur'); return false;">Fleur Cheveux</a>
+        <a href="#" onclick="filtrer('sac'); return false;">Sacs</a>
+        <a href="#" onclick="filtrer('bracelet'); return false;">Bracelets</a>
+      </div>
+      <div class="footer-col">
+        <h4>NOTRE ENTREPRISE</h4>
+        <a href="apropos.html">Qui Sommes Nous ?</a>
+        <a href="avis.html">Laissez Nous Votre Témoignage</a>
+        <a href="aide.html">Aide & FAQ</a>
+        <a href="suivi.html">Suivi Commande</a>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+        <a href="aide.html">Livraison Rapide</a>
+        <a href="aide.html">Paiement Sécurisé</a>
+        <a href="contact.html">Service Client Disponible 24h/24</a>
+        <a href="aide.html">Retour Facile sous 24h</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <p>📍 (+225) San Pedro - Cité,<br>Près du Collège La Ruche, Côte D'Ivoire</p>
+        <p>📞 +225 01 01 53 82 58</p>
+        <p>✉️ AblaviStore@Gmail.Com</p>
+        <a href="https://wa.me/c/22574845994" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <p>Copyright © By THE BLACK ANGEL.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

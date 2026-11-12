@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - ABLAVI STORE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">ABLAVI<span>STORE</span></div>
+    <nav>
+      <a href="index.html">ACCUEIL</a>
+      <a href="apropos.html">À PROPOS</a>
+      <a href="avis.html">AVIS CLIENT</a>
+      <a href="contact.html" class="actif">CONTACT</a>
+      <a href="aide.html">AIDE</a>
+      <a href="suivi.html">SUIVI COMMANDE</a>
+    </nav>
+    <a href="index.html" class="btn-boutique">🛍️ Voir la boutique</a>
+  </header>
+
+  <main class="page-apropos">
+    <div class="titre-page">
+      <h1>Contacte-Nous</h1>
+      <p>Une question ? Une commande ? Un conseil ? Écris-nous, on te répond vite sur WhatsApp 7j/7.</p>
+    </div>
+
+    <!-- NOS COORDONNÉES -->
+    <section class="bloc">
+      <h2>Nos Coordonnées</h2>
+      <ul class="liste-simple">
+        <li>📍 <strong>Adresse :</strong> San Pedro - Cité, Près du Collège La Ruche de San Pedro, Côte d'Ivoire</li>
+        <li>📞 <strong>Téléphone / WhatsApp :</strong> +225 07 00 00 00 00</li>
+        <li>✉️ <strong>Email :</strong> AblaviStore@Gmail.Com</li>
+        <li>🕐 <strong>Horaires :</strong> Lundi - Samedi : 8h à 20h | Dimanche : 10h à 18h</li>
+        <li>🚚 <strong>Livraison :</strong> 24h à 48h à San Pedro, 2 à 3 jours dans les grandes villes</li>
+      </ul>
+      <a href="https://wa.me/c/22574845994" target="_blank" class="btn-rose">💬 Nous parler sur WhatsApp</a>
+    </section>
+
+    <!-- FORMULAIRE -->
+    <section class="bloc">
+      <h2>Envoie-Nous Un Message</h2>
+      <p>Remplis ce formulaire, ça va ouvrir WhatsApp avec ton message déjà écrit. Tu n'as plus qu'à appuyer sur Envoyer.</p>
+      <br>
+      <label>Ton nom :</label>
+      <input type="text" id="contact-nom" placeholder="Ex : Awa de San Pedro" class="input-panier">
+
+      <label>Ton numéro WhatsApp :</label>
+      <input type="text" id="contact-tel" placeholder="Ex : 0700000000" class="input-panier">
+
+      <label>Tu veux parler de quoi ?</label>
+      <select id="contact-sujet" class="input-panier">
+        <option value="Je veux passer une commande">Je veux passer une commande</option>
+        <option value="Je veux savoir si un produit est disponible">Je veux savoir si un produit est disponible</option>
+        <option value="Je veux suivre ma commande">Je veux suivre ma commande</option>
+        <option value="J'ai un problème avec ma commande">J'ai un problème avec ma commande</option>
+        <option value="Autre question">Autre question</option>
+      </select>
+
+      <label>Ton message :</label>
+      <textarea id="contact-message" placeholder="Écris ton message ici... Ex : Bonjour, le Gloss Rose Brillant est-il encore disponible ?" class="input-panier" rows="4" style="resize:vertical;"></textarea>
+
+      <button onclick="envoyerContact()" class="btn-rose" style="border:none; cursor:pointer; width:100%;">Envoyer sur WhatsApp 💬</button>
+      <p id="message-contact" style="margin-top:10px; text-align:center; font-weight:bold;"></p>
+    </section>
+
+    <!-- QUESTIONS RAPIDES -->
+    <section class="bloc">
+      <h2>Questions Rapides</h2>
+      <p>Clique sur une question, ça ouvre WhatsApp direct :</p>
+      <br>
+      <div class="grille-objectifs">
+        <div class="carte-objectif">
+          <span class="icone-objectif">📦</span>
+          <h3>Mon colis est où ?</h3>
+          <p>Demande le suivi de ta commande.</p>
+          <a href="https://wa.me/2250700000000?text=Bonjour%2C%20je%20veux%20suivre%20ma%20commande" target="_blank" class="btn-rose" style="padding:8px 16px; font-size:13px; margin-top:8px;">Demander</a>
+        </div>
+        <div class="carte-objectif">
+          <span class="icone-objectif">💄</span>
+          <h3>Produit disponible ?</h3>
+          <p>Demande si un gloss ou un sac est encore en stock.</p>
+          <a href="https://wa.me/2250700000000?text=Bonjour%2C%20est-ce%20que%20ce%20produit%20est%20encore%20disponible%20%3F" target="_blank" class="btn-rose" style="padding:8px 16px; font-size:13px; margin-top:8px;">Demander</a>
+        </div>
+        <div class="carte-objectif">
+          <span class="icone-objectif">💰</span>
+          <h3>Prix & Livraison ?</h3>
+          <p>Demande les prix et les frais de livraison.</p>
+          <a href="https://wa.me/2250700000000?text=Bonjour%2C%20je%20veux%20conna%C3%AEtre%20les%20prix%20et%20la%20livraison" target="_blank" class="btn-rose" style="padding:8px 16px; font-size:13px; margin-top:8px;">Demander</a>
+        </div>
+        <div class="carte-objectif">
+          <span class="icone-objectif">🎁</span>
+          <h3>Code promo ?</h3>
+          <p>Demande s'il y a une promotion en cours.</p>
+          <a href="https://wa.me/2250700000000?text=Bonjour%2C%20y%20a-t-il%20un%20code%20promo%20en%20ce%20moment%20%3F" target="_blank" class="btn-rose" style="padding:8px 16px; font-size:13px; margin-top:8px;">Demander</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-ablavi">
+    <div class="footer-annuaire">
+      <h3 class="titre-annuaire">ANNUAIRE DES MARQUES</h3>
+      <p><strong>FASHION :</strong> <span>Gloss | Chouchou | Fleur Cheveux | Sacs | Bracelets</span></p>
+    </div>
+    <div class="footer-colonnes">
+      <div class="footer-col">
+        <h4>CATÉGORIES POPULAIRES</h4>
+        <a href="index.html">Gloss</a>
+        <a href="index.html">Chouchou</a>
+        <a href="index.html">Fleur Cheveux</a>
+        <a href="index.html">Sacs</a>
+        <a href="index.html">Bracelets</a>
+      </div>
+      <div class="footer-col">
+        <h4>NOTRE ENTREPRISE</h4>
+        <a href="apropos.html">Qui Sommes Nous ?</a>
+        <a href="avis.html">Laissez Nous Votre Témoignage</a>
+        <a href="aide.html">Aide & FAQ</a>
+        <a href="suivi.html">Suivi Commande</a>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+        <a href="#">Livraison Rapide</a>
+        <a href="#">Paiement Sécurisé</a>
+        <a href="#">Service Client Disponible 24h/24</a>
+        <a href="#">Retour Facile sous 24h</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <p>📍 (+225) San Pedro - Cité,<br>Près du Collège La Ruche, Côte D'Ivoire</p>
+        <p>📞 +225 07 00 00 00 00</p>
+        <p>✉️ AblaviStore@Gmail.Com</p>
+        <a href="" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <p>Copyright © By THE BLACK ANGEL.</p>
+    </div>
+  </footer>
+
+  <script>
+    function envoyerContact() {
+      let nom = document.getElementById("contact-nom").value.trim();
+      let tel = document.getElementById("contact-tel").value.trim();
+      let sujet = document.getElementById("contact-sujet").value;
+      let message = document.getElementById("contact-message").value.trim();
+      let msg = document.getElementById("message-contact");
+      if (!nom || !message) {
+        msg.textContent = "⚠️ Remplis ton nom et ton message !";
+        msg.style.color = "red";
+        return;
+      }
+      let texte = "Bonjour ABLAVI STORE ! 👋\n\nJe suis " + nom + " (" + tel + ")\nSujet : " + sujet + "\n\nMessage : " + message;
+      let lien = "https://wa.me/c/22574845994" + encodeURIComponent(texte);
+      window.open(lien, "_blank");
+      msg.textContent = "✅ WhatsApp ouvert ! Appuie sur Envoyer pour nous envoyer ton message.";
+      msg.style.color = "green";
+    }
+  </script>
+</body>
+</html>

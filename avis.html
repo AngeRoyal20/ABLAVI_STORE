@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avis Client - ABLAVI STORE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">ABLAVI<span>STORE</span></div>
+    <nav>
+      <a href="index.html">ACCUEIL</a>
+      <a href="apropos.html">À PROPOS</a>
+      <a href="avis.html" class="actif">AVIS CLIENT</a>
+      <a href="contact.html">CONTACT</a>
+      <a href="aide.html">AIDE</a>
+      <a href="suivi.html">SUIVI COMMANDE</a>
+    </nav>
+    <a href="index.html" class="btn-boutique">🛍️ Voir la boutique</a>
+  </header>
+
+  <main class="page-apropos">
+    <div class="titre-page">
+      <h1>Avis de Nos Clientes</h1>
+      <p>Ce que nos clientes disent vraiment de ABLAVI STORE. Merci pour votre confiance ❤️</p>
+    </div>
+
+    <!-- NOTE GLOBALE -->
+    <section class="bloc" style="text-align:center;">
+      <h2 style="display:block; text-align:center; border-bottom:none;">⭐ 4.9 / 5</h2>
+      <p style="text-align:center; font-size:18px;"><strong>Basé sur 120 avis de clientes</strong></p>
+      <p style="text-align:center;">⭐⭐⭐⭐⭐ 95% de nos clientes sont satisfaites</p>
+      <p style="text-align:center;">97% recommandent ABLAVI STORE à leurs amies</p>
+    </section>
+
+    <!-- LAISSER UN AVIS -->
+    <section class="bloc">
+      <h2>Laisse Nous Ton Témoignage</h2>
+      <p>Ton avis aide les autres femmes à nous faire confiance. Merci d'avance !</p>
+      <br>
+      <label>Ton nom :</label>
+      <input type="text" id="avis-nom" placeholder="Ex : Awa de San Pedro" class="input-panier">
+      <label>Ce que tu as acheté :</label>
+      <input type="text" id="avis-produit" placeholder="Ex : Gloss Rose Brillant" class="input-panier">
+      <label>Ta note :</label>
+      <br>
+      <select id="avis-note" class="input-panier">
+        <option value="⭐⭐⭐⭐⭐ (5/5)">⭐⭐⭐⭐⭐ (5/5) - Excellent</option>
+        <option value="⭐⭐⭐⭐ (4/5)">⭐⭐⭐⭐ (4/5) - Très bien</option>
+        <option value="⭐⭐⭐ (3/5)">⭐⭐⭐ (3/5) - Bien</option>
+        <option value="⭐⭐ (2/5)">⭐⭐ (2/5) - Moyen</option>
+        <option value="⭐ (1/5)">⭐ (1/5) - Pas bien</option>
+      </select>
+      <label>Ton message :</label>
+      <textarea id="avis-message" placeholder="Raconte nous ton expérience... Ex : J'ai commandé un gloss, livraison rapide, produit très beau..." class="input-panier" rows="4" style="resize:vertical;"></textarea>
+      <button onclick="envoyerAvis()" class="btn-rose" style="border:none; cursor:pointer; width:100%;">Envoyer mon avis ✅</button>
+      <p id="message-avis" style="margin-top:10px; text-align:center; font-weight:bold;"></p>
+    </section>
+
+    <!-- LISTE DES AVIS -->
+    <section class="bloc">
+      <h2>Ce Qu'Elles Disent</h2>
+      <div id="liste-avis"></div>
+    </section>
+
+    <!-- POURQUOI ELLES NOUS AIMENT -->
+    <section class="bloc">
+      <h2>Pourquoi Elles Nous Aiment ?</h2>
+      <ul class="liste-simple">
+        <li>✅ Produits conformes aux photos</li>
+        <li>✅ Livraison rapide à San Pedro</li>
+        <li>✅ Vendeuse gentille et disponible sur WhatsApp</li>
+        <li>✅ Prix abordables pour toutes</li>
+      </ul>
+      <a href="index.html" class="btn-rose">🛍️ Commander comme elles</a>
+    </section>
+  </main>
+
+  <footer class="footer-ablavi">
+    <div class="footer-annuaire">
+      <h3 class="titre-annuaire">ANNUAIRE DES MARQUES</h3>
+      <p><strong>FASHION :</strong> <span>Gloss | Chouchou | Fleur Cheveux | Sacs | Bracelets</span></p>
+    </div>
+    <div class="footer-colonnes">
+      <div class="footer-col">
+        <h4>CATÉGORIES POPULAIRES</h4>
+        <a href="index.html">Gloss</a>
+        <a href="index.html">Chouchou</a>
+        <a href="index.html">Fleur Cheveux</a>
+        <a href="index.html">Sacs</a>
+        <a href="index.html">Bracelets</a>
+      </div>
+      <div class="footer-col">
+        <h4>NOTRE ENTREPRISE</h4>
+        <a href="apropos.html">Qui Sommes Nous ?</a>
+        <a href="avis.html">Laissez Nous Votre Témoignage</a>
+        <a href="aide.html">Aide & FAQ</a>
+        <a href="suivi.html">Suivi Commande</a>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+        <a href="#">Livraison Rapide</a>
+        <a href="#">Paiement Sécurisé</a>
+        <a href="#">Service Client Disponible 24h/24</a>
+        <a href="#">Retour Facile sous 24h</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <p>📍 (+225) San Pedro - Cité,<br>Près du Collège La Ruche, Côte D'Ivoire</p>
+        <p>📞 +225 07 00 00 00 00</p>
+        <p>✉️ AblaviStore@Gmail.Com</p>
+        <a href="https://wa.me/c/22574845994" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <p>Copyright © By THE BLACK ANGEL.</p>
+    </div>
+  </footer>
+
+  <script>
+    const avisDefaut = [
+      { nom: "Awa K. - San Pedro", produit: "Gloss Rose Brillant", note: "⭐⭐⭐⭐⭐ (5/5)", message: "J'ai commandé mon gloss, il est arrivé le même jour ! Très beau, il brille vraiment comme sur la photo. Je recommande à 100%." },
+      { nom: "Mariam D. - San Pedro Cité", produit: "Sac à Main Noir Chic", note: "⭐⭐⭐⭐⭐ (5/5)", message: "Le sac est magnifique, qualité au top pour ce prix. La vendeuse est très gentille, elle m'a bien conseillée sur WhatsApp." },
+      { nom: "Fatou S. - Abidjan", produit: "Lot 3 Chouchous Colorés", note: "⭐⭐⭐⭐ (4/5)", message: "Commande reçue à Abidjan en 2 jours. Les chouchous sont très jolis. Je vais recommander encore." },
+      { nom: "Nadia B. - San Pedro", produit: "Fleur Cheveux Rose", note: "⭐⭐⭐⭐⭐ (5/5)", message: "La fleur est trop belle, tout le monde me demande où je l'ai achetée. Merci ABLAVI STORE !" },
+      { nom: "Kouassi A. - San Pedro", produit: "Bracelet Doré Femme", note: "⭐⭐⭐⭐⭐ (5/5)", message: "Très beau bracelet, je l'ai offert à ma sœur, elle a adoré. Livraison rapide, paiement facile avec Wave." }
+    ];
+    function afficherAvis() {
+      let mesAvis = JSON.parse(localStorage.getItem("avisABLAVI")) || [];
+      let tous = avisDefaut.concat(mesAvis);
+      let zone = document.getElementById("liste-avis");
+      zone.innerHTML = tous.map(a => `
+        <div style="background:#FFF5F7; padding:15px; border-radius:12px; margin-bottom:12px; border:1px solid #FFE3EE;">
+          <p><strong>${a.nom}</strong> - <span style="color:#FF69B4;">${a.produit}</span></p>
+          <p>${a.note}</p>
+          <p style="color:#555; margin:0;">"${a.message}"</p>
+        </div>
+      `).join("");
+    }
+    function envoyerAvis() {
+      let nom = document.getElementById("avis-nom").value.trim();
+      let produit = document.getElementById("avis-produit").value.trim();
+      let note = document.getElementById("avis-note").value;
+      let message = document.getElementById("avis-message").value.trim();
+      let msg = document.getElementById("message-avis");
+      if (!nom || !produit || !message) {
+        msg.textContent = "⚠️ Remplis ton nom, ton produit et ton message !";
+        msg.style.color = "red";
+        return;
+      }
+      let mesAvis = JSON.parse(localStorage.getItem("avisABLAVI")) || [];
+      mesAvis.push({ nom: nom, produit: produit, note: note, message: message });
+      localStorage.setItem("avisABLAVI", JSON.stringify(mesAvis));
+      msg.textContent = "✅ Merci " + nom + " ! Ton avis a été publié.";
+      msg.style.color = "green";
+      document.getElementById("avis-nom").value = "";
+      document.getElementById("avis-produit").value = "";
+      document.getElementById("avis-message").value = "";
+      afficherAvis();
+    }
+    afficherAvis();
+  </script>
+</body>
+</html>

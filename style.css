@@ -1,0 +1,134 @@
+/* ========== BASE ========== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #FFF5F7; color: #333; line-height: 1.6; }
+
+/* ========== BANDEAU  - TOUT EN HAUT - ALLER RETOUR ========== */
+.bandeau-defilant {
+  background: #FF1493;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 5px 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+}
+.bandeau-defilant span {
+  display: inline-block;
+  animation: aller-retour-frip3k 10s ease-in-out infinite alternate;
+}
+@keyframes aller-retour-frip3k {
+  from { transform: translateX(-250px); }
+  to { transform: translateX(250px); }
+}
+
+/* ========== HEADER COMMUN ========== */
+header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 10px; }
+.logo { font-size: 24px; font-weight: bold; color: #FF69B4; }
+.logo span { color: #333; }
+nav { display: flex; gap: 15px; flex-wrap: wrap; }
+nav a { text-decoration: none; color: #333; font-weight: bold; font-size: 13px; padding: 6px 10px; border-radius: 20px; }
+nav a.actif { background: #FF69B4; color: white; }
+nav a:hover { color: #FF69B4; }
+nav a.actif:hover { color: white; }
+#btn-panier { background: #FF69B4; color: white; border: none; padding: 10px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+.btn-boutique { background: #FF69B4; color: white; text-decoration: none; padding: 10px 16px; border-radius: 20px; font-weight: bold; font-size: 13px; }
+.btn-rose { background: #FF69B4; color: white; text-decoration: none; padding: 12px 22px; border-radius: 25px; font-weight: bold; display: inline-block; }
+
+/* ========== ACCUEIL - HERO / CATEGORIES / PRODUITS ========== */
+.hero { background: linear-gradient(135deg, #FF69B4, #FFB6C1); color: white; text-align: center; padding: 50px 20px; }
+.hero h1 { font-size: 32px; margin-bottom: 10px; }
+.hero p { margin-bottom: 20px; }
+.btn-hero { background: white; color: #FF69B4; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; }
+.categories { text-align: center; padding: 20px 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.categories button { background: white; border: 1px solid #FF69B4; color: #FF69B4; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+.categories button:hover { background: #FF69B4; color: white; }
+main { max-width: 1100px; margin: 0 auto; padding: 20px; }
+main h2 { text-align: center; margin-bottom: 15px; }
+#recherche { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 20px; }
+.grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.carte { background: white; border-radius: 15px; overflow: hidden; padding-bottom: 15px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+.carte img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
+.carte h3 { padding: 10px 10px 0; font-size: 16px; }
+.prix { color: #FF69B4; font-weight: bold; font-size: 18px; margin: 5px 0; }
+.carte button { background: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+.carte button:hover { background: #E55A9E; }
+
+/* ========== PANIER / MODAL ========== */
+.modal-cache { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; z-index: 1000; overflow-y: auto; }
+.modal-contenu { background: white; margin: 20px auto; padding: 20px; border-radius: 15px; width: 90%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+.modal-contenu h2, .modal-contenu h3 { margin-bottom: 10px; }
+.modal-contenu button { cursor: pointer; }
+.btn-commander { background: #FF69B4; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; }
+.panier-modal-scroll { overflow-y: auto; padding: 15px 0; }
+.panier-contenu { max-width: 520px; max-height: 90vh; overflow-y: auto; position: relative; padding-top: 45px; }
+.btn-x { position: absolute; top: 10px; right: 12px; background: #FF69B4; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; z-index: 10; }
+.titre-panier { margin-top: 0; }
+.ligne-reduction { display: none; color: green; }
+.box-promo { background: #FFF8E1; padding: 10px; border-radius: 10px; margin-bottom: 10px; }
+.ligne-promo { display: flex; gap: 5px; margin-top: 5px; }
+.ligne-promo input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+.btn-appliquer { background: #FF69B4; color: white; padding: 10px 15px; border-radius: 8px; border: none; }
+.message-promo { font-size: 13px; margin: 5px 0 0; }
+.input-panier { width: 100%; padding: 10px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+.label-paiement { display: block; padding: 8px; border-radius: 8px; margin-bottom: 5px; }
+.label-paiement.orange { background: #FFF5F7; }
+.label-paiement.bleu { background: #F0F7FF; }
+.label-paiement.jaune { background: #FFF8E1; }
+.label-conditions { font-size: 13px; display: block; background: #f9f9f9; padding: 10px; border-radius: 8px; }
+.message-paiement { display: none; background: #E8F5E9; padding: 12px; border-radius: 10px; margin-bottom: 10px; }
+.bas-panier { position: sticky; bottom: 0; background: white; padding: 10px 0; border-top: 1px solid #eee; }
+.bas-panier .btn-commander { width: 100%; padding: 12px; margin-bottom: 8px; }
+.btn-fermer { width: 100%; padding: 10px; background: #eee; border: none; border-radius: 8px; cursor: pointer; }
+.modal-conditions { position: relative; padding-top: 45px; }
+
+/* ========== PAGE A PROPOS - SIMPLE ========== */
+.page-apropos { max-width: 850px; margin: 0 auto; padding: 30px 20px; }
+.page-apropos h2 { text-align: left; }
+.titre-page { text-align: center; margin-bottom: 30px; }
+.titre-page h1 { font-size: 32px; color: #FF69B4; margin-bottom: 8px; }
+.titre-page p { color: #666; font-size: 15px; }
+.bloc { background: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.06); }
+.bloc h2 { font-size: 22px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #FF69B4; display: inline-block; }
+.bloc p { margin-bottom: 10px; color: #555; }
+.grille-objectifs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+.carte-objectif { background: #FFF5F7; padding: 18px; border-radius: 12px; border: 1px solid #FFE3EE; }
+.icone-objectif { font-size: 26px; display: block; margin-bottom: 8px; }
+.carte-objectif h3 { font-size: 16px; margin-bottom: 6px; text-align: left; }
+.carte-objectif p { font-size: 14px; color: #666; margin: 0; }
+.liste-faire { list-style: none; margin-top: 12px; }
+.liste-faire li { background: #FFF5F7; padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; font-size: 15px; }
+.liste-faire li strong { color: #333; }
+.mission { background: #FF69B4; color: white; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; font-size: 16px; }
+.liste-simple { list-style: none; margin: 12px 0 20px; }
+.liste-simple li { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 15px; }
+
+/* ========== FOOTER COMMUN A TOUTES LES PAGES ========== */
+.footer-ablavi { background: #1A1A1A; color: #999; margin-top: 40px; }
+.footer-annuaire { padding: 30px 6% 25px; border-bottom: 1px solid #333; }
+.titre-annuaire { color: #FF69B4; font-size: 16px; letter-spacing: 1px; margin-bottom: 12px; }
+.footer-annuaire p { font-size: 14px; line-height: 1.6; }
+.footer-annuaire p strong { color: #fff; }
+.footer-annuaire p span { color: #999; }
+.footer-colonnes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 35px 6%; }
+.footer-col h4 { color: #fff; font-size: 15px; margin-bottom: 18px; position: relative; padding-bottom: 8px; }
+.footer-col h4::after { content: ""; position: absolute; left: 0; bottom: 0; width: 35px; height: 2px; background: #FF69B4; }
+.footer-col a { display: block; color: #999; text-decoration: none; font-size: 14px; margin-bottom: 12px; }
+.footer-col a:hover { color: #FF69B4; }
+.footer-col p { font-size: 14px; line-height: 1.7; margin-bottom: 12px; color: #999; }
+.btn-whatsapp-footer { display: inline-block !important; background: #25D366; color: white !important; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin-top: 5px; }
+.footer-copy { border-top: 1px solid #333; text-align: center; padding: 20px; font-size: 14px; color: #777; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 700px) {
+  .grille-objectifs { grid-template-columns: 1fr; }
+  .footer-colonnes { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 24px; }
+  header { flex-direction: column; text-align: center; }
+}
+@media (max-width: 450px) {
+  .footer-colonnes { grid-template-columns: 1fr; }
+}

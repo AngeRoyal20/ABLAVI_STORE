@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - ABLAVI STORE</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="login" class="login-box">
+    <h1>🔒 ADMIN ABLAVI STORE</h1>
+    <p>Entre ton mot de passe</p>
+    <input type="password" id="mdp" placeholder="Mot de passe" class="input-mdp">
+    <br><br>
+    <button onclick="verifierMdp()" class="btn-entrer">ENTRER</button>
+  </div>
+  <div id="admin" class="admin-cache">
+    <div class="top">
+      <h1>👩‍💼 ADMIN ABLAVI STORE</h1>
+      <a href="index.html" class="lien-retour">← Retour à la boutique</a><br><br>
+      <button class="onglet actif" onclick="montrerOnglet('dashboard', this)">📊 Tableau</button>
+      <button class="onglet" onclick="montrerOnglet('stock', this)">📦 Stock</button>
+      <button class="onglet" onclick="montrerOnglet('commandes', this)">🛍️ Commandes (<span id="nb-commandes">0</span>)</button>
+      <button class="onglet" onclick="montrerOnglet('ajout', this)">➕ Ajouter</button>
+      <button class="onglet" onclick="montrerOnglet('promos', this)">🎁 Promos</button>
+    </div>
+    <div id="onglet-dashboard">
+      <div class="dash">
+        <div class="box"><b id="dash-ventes">0 F</b><span>💰 Total des ventes</span></div>
+        <div class="box"><b id="dash-commandes">0</b><span>🛍️ Commandes</span></div>
+        <div class="box"><b id="dash-produits">0</b><span>📦 Produits en boutique</span></div>
+        <div class="box"><b id="dash-epuises" class="rouge">0</b><span>❌ Produits épuisés</span></div>
+      </div>
+      <div class="form-box">
+        <h3>🏆 Produit qui se vend le plus</h3>
+        <div id="top-produit">Aucune vente pour le moment</div>
+        <h3>📋 Dernières commandes</h3>
+        <div id="dernieres-commandes"></div>
+      </div>
+    </div>
+    <div id="onglet-stock" class="onglet-cache"><div id="liste-admin"></div></div>
+    <div id="onglet-commandes" class="onglet-cache"><div id="liste-commandes"></div></div>
+    <div id="onglet-ajout" class="onglet-cache">
+      <div class="form-box">
+        <h3>➕ Ajouter un nouveau produit</h3>
+        <input type="text" id="new-nom" placeholder="Nom ex: Gloss Rose Pailleté">
+        <input type="number" id="new-prix" placeholder="Prix ex: 3000">
+        <select id="new-cat">
+          <option value="gloss">Gloss</option>
+          <option value="chouchou">Chouchou</option>
+          <option value="fleur">Fleur Cheveux</option>
+          <option value="sac">Sacs</option>
+          <option value="bracelet">Bracelets</option>
+          <option value="autre">Autres</option>
+        </select>
+        <input type="number" id="new-stock" placeholder="Stock ex: 10" value="10">
+        <input type="text" id="new-image" placeholder="Lien de la photo (URL) - ou laisse vide">
+        <button onclick="ajouterProduit()" class="btn-ajouter-produit">AJOUTER LE PRODUIT À LA BOUTIQUE ✅</button>
+      </div>
+      <div class="form-box"><h3>Mes produits ajoutés</h3><div id="liste-mes-produits"></div></div>
+    </div>
+    <div id="onglet-promos" class="onglet-cache">
+      <div class="form-box">
+        <h3>🎁 Créer un code promo</h3>
+        <input type="text" id="promo-code" placeholder="Code ex: ABLAVI10">
+        <select id="promo-type">
+          <option value="pourcent">Réduction en % (ex: 10%)</option>
+          <option value="montant">Réduction en F CFA (ex: 1000 F)</option>
+        </select>
+        <input type="number" id="promo-valeur" placeholder="Valeur ex: 10 pour 10% ou 1000 pour 1000F">
+        <button onclick="creerPromo()" class="btn-creer-promo">CRÉER LE CODE 🎁</button>
+      </div>
+      <div id="liste-promos"></div>
+    </div>
+  </div>
+<script src="admin.js"></script>
+</body>
+</html>

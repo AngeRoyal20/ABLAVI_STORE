@@ -1,0 +1,41 @@
+body { font-family: Arial; background: #FFF5F7; padding: 15px; margin: 0; }
+h1 { color: #FF69B4; text-align: center; }
+.carte { background: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+.carte img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+.info { flex: 1; margin-left: 10px; }
+.stock { font-weight: bold; }
+.stock.rouge { color: red; }
+.stock.vert { color: green; }
+button { border: none; border-radius: 20px; padding: 8px 12px; cursor: pointer; font-weight: bold; }
+.moins { background: #eee; }
+.plus { background: #FF69B4; color: white; }
+.restock { background: #4CAF50; color: white; margin-top: 5px; width: 100%; }
+input, select { padding: 10px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; margin-bottom: 8px; }
+.top { position: sticky; top: 0; background: #FFF5F7; padding: 10px 0; text-align: center; z-index: 10; }
+.onglet { padding: 10px 14px; margin: 3px; background: #eee; border-radius: 20px; font-size: 13px; }
+.onglet.actif { background: #FF69B4; color: white; }
+.commande { background: white; padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+.badge { padding: 4px 10px; border-radius: 20px; color: white; font-size: 12px; }
+.badge.Preparation { background: orange; }
+.badge.EnCours { background: #2196F3; }
+.badge.Livree { background: #4CAF50; }
+.dash { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.box { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+.box b { font-size: 22px; display: block; color: #FF69B4; }
+.box span { font-size: 12px; color: #666; }
+.form-box { background: white; padding: 15px; border-radius: 12px; margin-bottom: 12px; }
+.promo-card { background: white; padding: 12px; border-radius: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+.login-box { text-align: center; margin-top: 80px; }
+.input-mdp { width: 200px; }
+.btn-entrer { background: #FF69B4; color: white; padding: 12px 30px; }
+.texte-petit { font-size: 12px; color: #999; }
+.admin-cache { display: none; }
+.lien-retour { color: #FF69B4; }
+.rouge { color: red; }
+.onglet-cache { display: none; }
+.btn-ajouter-produit { background: #FF69B4; color: white; width: 100%; padding: 12px; }
+.btn-creer-promo { background: #4CAF50; color: white; width: 100%; padding: 12px; }
+.input-stock-admin { width: 50px; display: inline; }
+.btn-whatsapp-admin { background: #25D366; color: white; padding: 10px; border-radius: 20px; text-decoration: none; flex: 1; text-align: center; }
+.btn-supprimer { background: #ff4444; color: white; }
+.ligne-flex { display: flex; gap: 8px; margin-top: 10px; }
