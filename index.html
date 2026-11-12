@@ -1,145 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ABLAVI STORE - Accessoires Femme</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABLAVI STORE</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#fff5f7}
+header{background:#d63384;color:#fff;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{font-size:22px}
+.banner{background:#ffe0ec;padding:15px;text-align:center;font-size:14px}
+#produits{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-body{padding:10px}
+.prix{color:#d63384;font-weight:bold;font-size:16px}
+.ancien{text-decoration:line-through;color:#999;font-size:13px}
+.btn{width:100%;background:#25D366;color:#fff;border:0;padding:10px;border-radius:8px;font-weight:bold;margin-top:8px}
+.btn2{width:100%;background:#d63384;color:#fff;border:0;padding:10px;border-radius:8px;font-weight:bold;margin-top:5px}
+#panier{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px;box-shadow:0 -2px 10px rgba(0,0,0,.15);display:none}
+input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
+.section{padding:15px;background:#fff;margin:12px;border-radius:12px}
+</style>
 </head>
 <body>
-
-  <!-- ====BANDEAU ===== -->
-<div class="bandeau-defilant">
-  <span id="texte-annonce">nous sommes ouverts</span>
-</div>
-
-  <header>
-    <div class="logo">ABLAVI<span>STORE</span></div>
-    <nav>
-      <a href="index.html" class="actif">ACCUEIL</a>
-      <a href="apropos.html">À PROPOS</a>
-      <a href="avis.html">AVIS CLIENT</a>
-      <a href="contact.html">CONTACT</a>
-      <a href="aide.html">AIDE</a>
-      <a href="suivi.html">SUIVI COMMANDE</a>
-    </nav>
-    <button id="btn-panier" onclick="afficherPanier()">🛍️ Panier (<span id="nb-panier">0</span>)</button>
-  </header>
-
-  <section class="hero">
-    <h1>Gloss, Sacs & Bijoux pour Femme</h1>
-    <p>Les plus beaux accessoires pour briller partout où que vous soyez . Qualité garantie, livraison rapide.</p>
-    <a href="#produits" class="btn-hero">Voir la boutique</a>
-  </section>
-
-  <section class="categories">
-    <button onclick="filtrer('tout')">Tout</button>
-    <button onclick="filtrer('gloss')">Gloss</button>
-    <button onclick="filtrer('chouchou')">Chouchou</button>
-    <button onclick="filtrer('fleur')">Fleur Cheveux</button>
-    <button onclick="filtrer('sac')">Sacs</button>
-    <button onclick="filtrer('bracelet')">Bracelets</button>
-    <button onclick="filtrer('autre')">Autres</button>
-  </section>
-
-  <main id="produits">
-    <h2>Nos Articles</h2>
-    <input type="text" id="recherche" placeholder="Rechercher gloss, sac..." onkeyup="rechercher()">
-    <div id="liste-produits" class="grille"></div>
-  </main>
-
-  <div id="panier-modal" class="modal-cache panier-modal-scroll">
-    <div class="modal-contenu panier-contenu">
-      <button onclick="fermerPanier()" class="btn-x">✕</button>
-      <h2 class="titre-panier">🛍️ Ton Panier</h2>
-      <div id="contenu-panier"></div>
-      <hr>
-      <p>Sous-total : <span id="sous-total">0</span> F CFA</p>
-      <p>Livraison : <span id="frais-livraison">1000</span> F CFA</p>
-      <p id="ligne-reduction" class="ligne-reduction">Réduction : -<span id="montant-reduction">0</span> F CFA</p>
-      <p><strong>Total à payer : <span id="total-panier">0</span> F CFA</strong></p>
-      <hr>
-      <div class="box-promo">
-        <label>🎁 Code promo :</label>
-        <div class="ligne-promo">
-          <input type="text" id="code-promo" placeholder="Ex: ABLAVI10">
-          <button onclick="appliquerPromo()" class="btn-appliquer">Appliquer</button>
-        </div>
-        <p id="message-promo" class="message-promo"></p>
-      </div>
-      <h3>Tes infos pour la livraison :</h3>
-      <input type="text" id="client-nom" placeholder="Ton nom complet" class="input-panier">
-      <input type="text" id="client-whatsapp" placeholder="Ton numéro WhatsApp ex: 0101538258" class="input-panier">
-      <input type="text" id="client-commune" placeholder="Ta commune / quartier ex: San Pedro - Cité" class="input-panier">
-      <h3>Choisis ton mode de paiement :</h3>
-      <label class="label-paiement orange"><input type="radio" name="paiement" value="Orange Money" checked> 🧡 Orange Money</label>
-      <label class="label-paiement bleu"><input type="radio" name="paiement" value="Wave"> 💙 Wave</label>
-      <br>
-      <label class="label-conditions">
-        <input type="checkbox" id="accepter-conditions"> J'ai lu et j'accepte les <a href="#" onclick="voirConditions(); return false;">conditions de paiement</a> : pas de remboursement après envoi, paiement vérifié avant livraison.
-      </label><br>
-      <div id="message-paiement" class="message-paiement"></div>
-      <div class="bas-panier">
-        <button class="btn-commander" onclick="payerCommande()">ENVOYEZ + LE REÇU DU DEPOT</button>
-        <button onclick="fermerPanier()" class="btn-fermer">Fermer</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="conditions-modal" class="modal-cache">
-    <div class="modal-contenu modal-conditions">
-      <button onclick="fermerConditions()" class="btn-x">✕</button>
-      <h3>Conditions de Paiement - ABLAVI STORE</h3>
-      <p>1. Le paiement doit être effectué avant la livraison.</p>
-      <p>2. Aucun remboursement n'est possible après validation de la commande.</p>
-      <p>3. Si le produit est défectueux, contacte-nous dans les 24h sur WhatsApp avec photo.</p>
-      <p>4. La livraison se fait sous 24h à 48h.</p>
-      <p>5. Numéro officiel ABLAVI STORE : +225 01 01 53 82 58</p>
-      <button onclick="fermerConditions()">J'ai compris</button>
-    </div>
-  </div>
-
-  <footer class="footer-ablavi">
-    <div class="footer-annuaire">
-      <h3 class="titre-annuaire">ANNUAIRE DES MARQUES</h3>
-      <p><strong>FASHION :</strong> <span>Gloss | Chouchou | Fleur Cheveux | Sacs | Bracelets</span></p>
-    </div>
-    <div class="footer-colonnes">
-      <div class="footer-col">
-        <h4>CATÉGORIES POPULAIRES</h4>
-        <a href="#" onclick="filtrer('gloss'); return false;">Gloss</a>
-        <a href="#" onclick="filtrer('chouchou'); return false;">Chouchou</a>
-        <a href="#" onclick="filtrer('fleur'); return false;">Fleur Cheveux</a>
-        <a href="#" onclick="filtrer('sac'); return false;">Sacs</a>
-        <a href="#" onclick="filtrer('bracelet'); return false;">Bracelets</a>
-      </div>
-      <div class="footer-col">
-        <h4>NOTRE ENTREPRISE</h4>
-        <a href="apropos.html">Qui Sommes Nous ?</a>
-        <a href="avis.html">Laissez Nous Votre Témoignage</a>
-        <a href="aide.html">Aide & FAQ</a>
-        <a href="suivi.html">Suivi Commande</a>
-      </div>
-      <div class="footer-col">
-        <h4>SERVICES</h4>
-        <a href="aide.html">Livraison Rapide</a>
-        <a href="aide.html">Paiement Sécurisé</a>
-        <a href="contact.html">Service Client Disponible 24h/24</a>
-        <a href="aide.html">Retour Facile sous 24h</a>
-      </div>
-      <div class="footer-col">
-        <h4>CONTACT</h4>
-        <p>📍 (+225) San Pedro - Cité,<br>Près du Collège La Ruche, Côte D'Ivoire</p>
-        <p>📞 +225 01 01 53 82 58</p>
-        <p>✉️ AblaviStore@Gmail.Com</p>
-        <a href="https://wa.me/c/22574845994" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
-      </div>
-    </div>
-    <div class="footer-copy">
-      <p>Copyright © By THE BLACK ANGEL.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+<header><h1>✨ ABLAVI STORE ✨</h1><p>Robes • Perruques • Sacs - San Pedro & partout en Côte d'Ivoire</p></header>
+<div class="banner">🚚 <b>Livraison San Pedro à partir de 1000 FCFA</b> | Autres villes à partir de 5000 FCFA<br>💳 Paiement à la livraison - Orange Money / Wave / MTN MoMo</div>
+<div id="produits">Chargement...</div>
+<div class="section"><h2>⭐ Laisser un avis</h2><input id="avisNom" placeholder="Ton nom"><input id="avisProduit" placeholder="Quel produit ?"><select id="avisNote"><option value="5">⭐⭐⭐⭐⭐ 5</option><option value="4">⭐⭐⭐⭐ 4</option><option value="3">⭐⭐⭐ 3</option></select><textarea id="avisMsg" placeholder="Ton avis..."></textarea><button class="btn2" onclick="envoyerAvis()">Envoyer mon avis</button></div>
+<div class="section"><h2>⭐ Avis de nos clientes</h2><div id="listeAvis">Chargement...</div></div>
+<div id="panier"><h3>🛒 Ma commande</h3><div id="panierContenu"></div><input id="nomClient" placeholder="Ton nom complet"><input id="telClient" placeholder="Ton numéro WhatsApp"><select id="ville"><option value="San Pedro">San Pedro - 1000 FCFA</option><option value="Abidjan">Abidjan - 5000 FCFA</option><option value="Autre ville">Autre ville - 5000 FCFA</option></select><input id="adresse" placeholder="Ton quartier / Adresse"><select id="paiement"><option>Paiement à la livraison</option><option>Orange Money</option><option>Wave</option><option>MTN MoMo</option></select><button class="btn" onclick="validerCommande()">✅ Commander sur WhatsApp + Enregistrer</button></div>
+<script>
+const API = "https://script.google.com/macros/s/AKfycbyyf-48uFwfKk8irLMPg-Jv6xZmc2lbh1sTV6Wj3Ves8DOnFKNwGdda8EqlSoAKsy__/exec";
+const WHATSAPP_NUMERO = "2250000000000";
+let panier=[]; let produitsData=[];
+async function charger(){
+  try{
+    let r=await fetch(API+"?action=produits"); produitsData=await r.json();
+    let html=""; produitsData.forEach(p=>{ let rupture=p.stock<=0?"<span style='color:red'>Rupture</span>":`<span style='color:green'>En stock: ${p.stock}</span>`; html+=`<div class='card'><img src='${p.image}'><div class='card-body'><h3>${p.nom}</h3><div class='prix'>${p.prix} FCFA <span class='ancien'>${p.ancienPrix||''} FCFA</span></div><div>${rupture}</div><p style='font-size:12px;color:#666'>${p.description||''}</p><button class='btn2' onclick='ajouter(${p.id})' ${p.stock<=0?'disabled':''}>+ Ajouter au panier</button></div></div>`; });
+    document.getElementById('produits').innerHTML=html;
+    let r2=await fetch(API+"?action=avis"); let avis=await r2.json();
+    document.getElementById('listeAvis').innerHTML=avis.map(a=>`<div><b>${a.nom}</b> - ${a.produit} - ${'⭐'.repeat(a.note||5)}<br>${a.message}<hr></div>`).join('')||"Pas encore d'avis";
+  }catch(e){ document.getElementById('produits').innerHTML="Erreur chargement"; }
+}
+function ajouter(id){ let p=produitsData.find(x=>x.id==id); panier.push(p); afficherPanier(); }
+function afficherPanier(){ document.getElementById('panier').style.display='block'; let total=0; let html=panier.map(p=>{total+=Number(p.prix); return `<div>${p.nom} - ${p.prix} FCFA</div>`}).join(''); let ville=document.getElementById('ville')?.value||"San Pedro"; let livraison=ville==="San Pedro"?1000:5000; document.getElementById('panierContenu').innerHTML=html+`<b>Livraison: ${livraison} FCFA</b><br><b>Total: ${total+livraison} FCFA</b>`; window.totalCommande=total+livraison; window.livraison=livraison; }
+async function validerCommande(){ let nom=document.getElementById('nomClient').value; let tel=document.getElementById('telClient').value; let ville=document.getElementById('ville').value; let adresse=document.getElementById('adresse').value; let paiement=document.getElementById('paiement').value; if(!nom||!tel||!adresse){alert("Remplis nom, téléphone et adresse");return;} let idCmd="ABL"+Date.now(); let produitsTxt=panier.map(p=>p.nom).join(", "); await fetch(API,{method:"POST",body:JSON.stringify({type:"commande",idCommande:idCmd,nomClient:nom,telephone:tel,produits:produitsTxt,total:window.totalCommande,paiement:paiement,adresse:ville+" - "+adresse,produitNom:panier[0].nom,quantite:panier.length})}); let msg=`Bonjour ABLAVI STORE! Je veux commander:%0A%0ACommande ${idCmd}%0A${produitsTxt}%0A%0ANom: ${nom}%0ATel: ${tel}%0AVille: ${ville}%0AAdresse: ${adresse}%0APaiement: ${paiement}%0ATotal: ${window.totalCommande} FCFA (livraison ${window.livraison} incluse)`; window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`,"_blank"); alert("Commande enregistrée dans ton tableau !"); panier=[]; afficherPanier(); }
+async function envoyerAvis(){ let nom=document.getElementById('avisNom').value; let produit=document.getElementById('avisProduit').value; let note=document.getElementById('avisNote').value; let message=document.getElementById('avisMsg').value; if(!nom||!message){alert("Mets nom et message");return;} await fetch(API,{method:"POST",body:JSON.stringify({type:"avis",nom,produit,note,message})}); alert("Merci pour ton avis !"); charger(); }
+document.getElementById('ville')?.addEventListener('change',afficherPanier); charger();
+</script>
 </body>
 </html>
