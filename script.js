@@ -4,6 +4,7 @@ let tousProduits = [];
 let produitsAffiches = [];
 let panier = [];
 let promoAppliquee = 0;
+let quantites = {}; // <-- Pour garder le nombre choisi sur chaque produit
 
 // Produits de secours - si ton tableau est vide, ton site affiche quand même ça, il ne reste jamais blanc
 const PRODUITS_SECOURS = [
@@ -28,15 +29,37 @@ function afficherProduits(){
   let zone = document.getElementById("liste-produits");
   if(!zone) return;
   if(!produitsAffiches.length){ zone.innerHTML = "<p>Aucun produit pour le moment.</p>"; return; }
-  zone.innerHTML = produitsAffiches.map(p=>`
+  zone.innerHTML = produitsAffiches.map(p=>{
+    let qte = quantites[p.id] || 1;
+    return `
     <div class="carte-produit">
       <img src="${p.image}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/300x300?text=ABLAVI'">
       <h3>${p.nom}</h3>
       <p>${p.description||""}</p>
       <p><strong>${p.prix} F CFA</strong> ${p.ancienPrix? `<s>${p.ancienPrix} F CFA</s>`: ""}</p>
       <p style="font-size:12px;color:${p.stock>0?'green':'red'}">${p.stock>0? 'En stock : '+p.stock : 'Rupture'}</p>
-      <button onclick="ajouterPanier(${p.id})" ${p.stock<=0?'disabled':''}>Ajouter au panier</button>
-    </div>`).join("");
+      
+      <!-- COMPTEUR + ET - REMIS -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin:10px 0;">
+        <button onclick="changerQte(${p.id}, -1)" style="width:35px; height:35px; border-radius:50%; border:1px solid #ff69b4; background:#fff; color:#ff69b4; font-size:20px; font-weight:bold; cursor:pointer;">-</button>
+        <span id="qte-${p.id}" style="font-size:18px; font-weight:bold; min-width:25px; text-align:center;">${qte}</span>
+        <button onclick="changerQte(${p.id}, 1)" style="width:35px; height:35px; border-radius:50%; border:none; background:#ff69b4; color:#fff; font-size:20px; font-weight:bold; cursor:pointer;">+</button>
+      </div>
+
+      <button onclick="ajouterPanier(${p.id})" ${p.stock<=0?'disabled':''} style="width:100%; padding:12px; background:#ff69b4; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Ajouter au panier</button>
+    </div>`;
+  }).join("");
+}
+
+// NOUVELLE FONCTION POUR LE + ET -
+function changerQte(id, delta){
+  let actuelle = quantites[id] || 1;
+  let nouvelle = actuelle + delta;
+  if(nouvelle < 1) nouvelle = 1;
+  if(nouvelle > 99) nouvelle = 99;
+  quantites[id] = nouvelle;
+  let span = document.getElementById("qte-"+id);
+  if(span) span.textContent = nouvelle;
 }
 
 function filtrer(cat){
@@ -54,9 +77,12 @@ function rechercher(){
 function ajouterPanier(id){
   let p = tousProduits.find(x=> x.id==id);
   if(!p) return;
+  let qteChoisie = quantites[id] || 1;
   let exist = panier.find(x=> x.id==id);
-  if(exist) exist.qte++; else panier.push({...p, qte:1});
+  if(exist) exist.qte += qteChoisie; else panier.push({...p, qte: qteChoisie});
+  quantites[id] = 1; // On remet à 1 après ajout
   mettreAJourPanier();
+  afficherProduits(); // Pour remettre l'affichage à 1
   document.getElementById("panier-modal").classList.remove("modal-cache");
 }
 
