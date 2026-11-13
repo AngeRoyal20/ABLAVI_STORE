@@ -5,124 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ABLAVI STORE - Accessoires Femme</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* === FIX ABLAVI : TOUTES LES IMAGES MEME TAILLE === */
-    #liste-produits.grille{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-      gap:20px;
-      align-items:stretch;
-    }
-    #liste-produits > div,
-    #liste-produits .carte,
-    #liste-produits .produit,
-    #liste-produits .product-card,
-    #liste-produits .card{
-      display:flex !important;
-      flex-direction:column !important;
-      overflow:hidden !important;
-      height:100% !important;
-      background:#fff;
-      border-radius:12px;
-    }
-    #liste-produits img,
-    #liste-produits .carte img,
-    #liste-produits .produit img,
-    #liste-produits .product-card img,
-    #liste-produits .card img{
-      width:100% !important;
-      height:230px !important;
-      min-height:230px !important;
-      max-height:230px !important;
-      object-fit:cover !important;
-      object-position:center center !important;
-      display:block !important;
-      flex-shrink:0 !important;
-    }
-    #liste-produits .image-produit,
-    #liste-produits .product-image{
-      width:100% !important;
-      height:230px !important;
-      min-height:230px !important;
-      background-size:cover !important;
-      background-position:center !important;
-      flex-shrink:0 !important;
-    }
-
-    /* === FIX PANIER : CACHÉ PAR DÉFAUT, FENÊTRE PAR-DESSUS === */
-    .modal-cache{
-      display:none !important;
-    }
-    #panier-modal, #conditions-modal{
-      position:fixed !important;
-      top:0 !important;
-      left:0 !important;
-      width:100% !important;
-      height:100% !important;
-      background:rgba(0,0,0,0.6) !important;
-      z-index:9999 !important;
-      display:flex !important;
-      align-items:flex-start !important;
-      justify-content:center !important;
-      overflow-y:auto !important;
-      padding:20px 10px !important;
-      box-sizing:border-box !important;
-    }
-    #panier-modal.modal-cache, #conditions-modal.modal-cache{
-      display:none !important;
-    }
-    #panier-modal .modal-contenu, #conditions-modal .modal-contenu{
-      background:#fff !important;
-      width:100% !important;
-      max-width:480px !important;
-      border-radius:15px !important;
-      padding:20px !important;
-      margin:auto !important;
-      position:relative !important;
-      box-shadow:0 10px 30px rgba(0,0,0,0.3) !important;
-    }
-    .btn-x{
-      position:absolute;
-      top:10px;
-      right:12px;
-      background:#ff69b4;
-      color:#fff;
-      border:none;
-      border-radius:50%;
-      width:32px;
-      height:32px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-    .input-panier{
-      width:100%;
-      padding:12px;
-      margin:6px 0;
-      border:1px solid #ddd;
-      border-radius:8px;
-      box-sizing:border-box;
-    }
-    .btn-commander{
-      width:100%;
-      padding:14px;
-      background:#ff69b4;
-      color:#fff;
-      border:none;
-      border-radius:10px;
-      font-weight:bold;
-      cursor:pointer;
-      margin-top:10px;
-    }
-    .btn-fermer{
-      width:100%;
-      padding:12px;
-      background:#eee;
-      border:none;
-      border-radius:10px;
-      margin-top:8px;
-      cursor:pointer;
-    }
-  </style>
 </head>
 <body>
 
@@ -152,11 +34,10 @@
 
   <section class="categories">
     <button onclick="filtrer('tout')">Tout</button>
-    <button onclick="filtrer('gloss')">Gloss</button>
-    <button onclick="filtrer('chouchou')">Chouchou</button>
-    <button onclick="filtrer('fleur')">Fleur Cheveux</button>
+    <button onclick="filtrer('skin care')">skin care</button>
+    <button onclick="filtrer('accessoires de cheveux')">accessoires de cheveux</button>
+    <button onclick="filtrer('maquillage')">maquillage</button>
     <button onclick="filtrer('sac')">Sacs</button>
-    <button onclick="filtrer('bracelet')">Bracelets</button>
     <button onclick="filtrer('autre')">Autres</button>
   </section>
 
@@ -220,16 +101,16 @@
   <footer class="footer-ablavi">
     <div class="footer-annuaire">
       <h3 class="titre-annuaire">ANNUAIRE DES MARQUES</h3>
-      <p><strong>FASHION :</strong> <span>Gloss | Chouchou | Fleur Cheveux | Sacs | Bracelets</span></p>
+      <p><strong>FASHION :</strong> <span>Gloss | Accessoires Cheveux | Sacs | ....</span></p>
     </div>
     <div class="footer-colonnes">
       <div class="footer-col">
         <h4>CATÉGORIES POPULAIRES</h4>
         <a href="#" onclick="filtrer('gloss'); return false;">Gloss</a>
-        <a href="#" onclick="filtrer('chouchou'); return false;">Chouchou</a>
-        <a href="#" onclick="filtrer('fleur'); return false;">Fleur Cheveux</a>
+        <a href="#" onclick="filtrer('maquillage'); return false;">Maquillage</a>
+        <a href="#" onclick="filtrer('fleur'); return false;"></a>
         <a href="#" onclick="filtrer('sac'); return false;">Sacs</a>
-        <a href="#" onclick="filtrer('bracelet'); return false;">Bracelets</a>
+          <a href="#" onclick="filtrer('accessoire de cheveux'); return false;">accessoires de cheveux</a>
       </div>
       <div class="footer-col">
         <h4>NOTRE ENTREPRISE</h4>
@@ -250,7 +131,7 @@
         <p>📍 (+225) San Pedro - Cité,<br>Près du Collège La Ruche, Côte D'Ivoire</p>
         <p>📞 +225 01 01 53 82 58</p>
         <p>✉️ AblaviStore@Gmail.Com</p>
-        <a href="https://wa.me/c/22574845994" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
+        <a href="https://wa.me/2250101538258?text=Bonjour%20ABLAVI%20STORE%2C%20je%20veux%20commander" target="_blank" class="btn-whatsapp-footer">💬 WhatsApp</a>
       </div>
     </div>
     <div class="footer-copy">
