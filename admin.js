@@ -20,11 +20,26 @@ function montrerOnglet(nom, btn){
 
 async function chargerTout(){
   try{
-    let r = await fetch(API);
+    // CORRIGÉ : ?t= pour éviter le cache, sinon Admin affiche toujours 0
+    let r = await fetch(API + "?t=" + Date.now());
     let data = await r.json();
-    if(Array.isArray(data)){ produits=data; commandes=[]; }
-    else { produits=data.produits||[]; commandes=data.commandes||[]; }
-  }catch(e){ produits=[]; commandes=[]; }
+    console.log("Données reçues :", data);
+
+    // CORRIGÉ : On lit les 2 formats, ancien et nouveau
+    if(data && data.produits){
+      produits = data.produits || [];
+      commandes = data.commandes || [];
+    } else if(Array.isArray(data)){
+      produits = data;
+      commandes = [];
+    } else {
+      produits = [];
+      commandes = [];
+    }
+  }catch(e){ 
+    console.log("Erreur chargement", e);
+    produits=[]; commandes=[]; 
+  }
 
   let epuises = produits.filter(p=> Number(p.stock)<=0).length;
   let totalVentes = commandes.reduce((a,b)=> a + (Number(b.total)||0),0);
@@ -34,8 +49,10 @@ async function chargerTout(){
   set("dash-produits", produits.length);
   set("dash-epuises", epuises);
   set("nb-commandes", commandes.length);
+
   let der=document.getElementById("dernieres-commandes");
   if(der) der.innerHTML = commandes.length ? commandes.slice(-3).reverse().map(c=>`<p>${c.idCommande} - ${c.nomClient} - ${c.total} F</p>`).join("") : "Aucune commande";
+
   afficherCommandes();
 }
 
@@ -43,7 +60,7 @@ function afficherCommandes(){
   let zone=document.getElementById("liste-commandes");
   if(!zone) return;
   if(!commandes.length){ zone.innerHTML="<p>Aucune commande</p>"; return; }
-  zone.innerHTML = commandes.map(c=>`<div class="carte"><b>${c.idCommande}</b> - ${c.nomClient} (${c.telephone})<br>${c.produits} - <b>${c.total} F</b> - ${c.paiement}</div>`).join("");
+  zone.innerHTML = commandes.map(c=>`<div class="carte"><b>${c.idCommande}</b> - ${c.nomClient} (${c.telephone||""})<br>${c.produits} - <b>${c.total} F</b> - ${c.paiement||""} - ${c.adresse||""}</div>`).join("");
 }
 
 function afficherPromos(){
