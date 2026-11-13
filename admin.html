@@ -12,18 +12,14 @@ h1{text-align:center;color:#ff5a8a}
 .onglet-cache{display:none}
 .admin-cache{display:none}
 .carte{background:#fff;border-radius:12px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #0001}
-input{padding:10px;border:1px solid #ddd;border-radius:8px}
+input{padding:12px;border:1px solid #ddd;border-radius:8px;width:100%;box-sizing:border-box}
 .btn-rose{background:#ff5a8a;color:#fff;border:none;padding:14px;border-radius:10px;width:100%;cursor:pointer;font-weight:bold}
-.btn-plus{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;font-size:18px;background:#ff5a8a;color:#fff}
-.btn-moins{width:34px;height:34px;border-radius:50%;border:1px solid #ddd;cursor:pointer;font-size:18px;background:#fff}
-.btn-suppr{background:red;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
-.btn-restock{background:#28a745;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
 </style>
 </head>
 <body>
 <div id="login" style="max-width:350px;margin:60px auto;text-align:center">
   <h1>ADMIN ABLAVI STORE</h1>
-  <input type="password" id="mdp" placeholder="Mot de passe" style="width:100%;box-sizing:border-box">
+  <input type="password" id="mdp" placeholder="Mot de passe">
   <button class="btn-rose" onclick="verifierMdp()" style="margin-top:10px">Entrer</button>
 </div>
 
@@ -32,7 +28,6 @@ input{padding:10px;border:1px solid #ddd;border-radius:8px}
   <p style="text-align:center"><a href="index.html">← Retour à la boutique</a></p>
   <div style="text-align:center">
     <button class="onglet-btn actif" onclick="montrerOnglet('dashboard',this)">📊 Tableau</button>
-    <button class="onglet-btn" onclick="montrerOnglet('stock',this)">📦 Stock</button>
     <button class="onglet-btn" onclick="montrerOnglet('commandes',this)">🛍️ Commandes (<span id="nb-commandes">0</span>)</button>
     <button class="onglet-btn" onclick="montrerOnglet('promos',this)">🎁 Promos</button>
   </div>
@@ -43,12 +38,7 @@ input{padding:10px;border:1px solid #ddd;border-radius:8px}
     <div class="carte"><b>Produits en boutique :</b> <span id="dash-produits">0</span></div>
     <div class="carte"><b>Produits épuisés :</b> <span id="dash-epuises">0</span></div>
     <div class="carte"><b>Dernières commandes :</b><div id="dernieres-commandes">Aucune commande</div></div>
-  </div>
-
-  <div id="onglet-stock" class="onglet-cache">
-    <h2>📦 Stock - Restocker ici</h2>
-    <p>👉 Pour ajouter un NOUVEAU produit, ajoute une ligne directement dans le Google Sheet, onglet Produits.</p>
-    <div id="liste-admin">Chargement...</div>
+    <div class="carte" style="background:#fff3cd">💡 <b>Pour restocker ou ajouter un produit :</b><br>Ouvre ton Google Sheet > onglet Produits > change le Stock ou ajoute une ligne. Le site se met à jour tout seul.</div>
   </div>
 
   <div id="onglet-commandes" class="onglet-cache">
