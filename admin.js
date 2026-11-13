@@ -1,39 +1,87 @@
-const produitsBase = [
-  { id: 1, nom: "Gloss Rose Brillant", prix: 2500, categorie: "gloss", stock: 0, image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500" },
-  { id: 2, nom: "Gloss Rouge Mat", prix: 3000, categorie: "gloss", stock: 5, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500" },
-  { id: 3, nom: "Gloss Nude", prix: 2000, categorie: "gloss", stock: 8, image: "https://images.unsplash.com/photo-1620712943542-2c87a1e1b0e5?w=500" },
-  { id: 4, nom: "Gloss Pailleté", prix: 3500, categorie: "gloss", stock: 0, image: "https://images.unsplash.com/photo-1616680219484-9c9c60b1f9d2?w=500" },
-  { id: 5, nom: "Gloss Marron Chocolat", prix: 3000, categorie: "gloss", stock: 4, image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500" },
-  { id: 6, nom: "Gloss Transparent", prix: 2000, categorie: "gloss", stock: 10, image: "https://images.unsplash.com/photo-1583001931096-959e9a1a6223?w=500" },
-  { id: 7, nom: "Chouchou Rose Satin", prix: 1500, categorie: "chouchou", stock: 0, image: "https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?w=500" },
-  { id: 8, nom: "Chouchou Noir Velours", prix: 1500, categorie: "chouchou", stock: 6, image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=500" },
-  { id: 9, nom: "Chouchou Léopard", prix: 2000, categorie: "chouchou", stock: 3, image: "https://images.unsplash.com/photo-1616680219484-9c9c60b1f9d2?w=500" },
-  { id: 10, nom: "Chouchou Blanc", prix: 1200, categorie: "chouchou", stock: 7, image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500" },
-  { id: 11, nom: "Lot 3 Chouchous Colorés", prix: 3500, categorie: "chouchou", stock: 2, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500" },
-  { id: 12, nom: "Fleur Cheveux Rose", prix: 2500, categorie: "fleur", stock: 5, image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500" },
-  { id: 13, nom: "Fleur Cheveux Blanche", prix: 2500, categorie: "fleur", stock: 5, image: "https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=500" },
-  { id: 14, nom: "Pince Fleur Dorée", prix: 3000, categorie: "fleur", stock: 4, image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500" },
-  { id: 15, nom: "Bandeau Fleur", prix: 4000, categorie: "fleur", stock: 2, image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=500" },
-  { id: 16, nom: "Sac à Main Noir Chic", prix: 15000, categorie: "sac", stock: 5, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500" },
-  { id: 17, nom: "Sac Bandoulière Rose", prix: 12000, categorie: "sac", stock: 3, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500" },
-  { id: 18, nom: "Bracelet Doré Femme", prix: 5000, categorie: "bracelet", stock: 6, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500" },
-  { id: 19, nom: "Bracelet Perles", prix: 4000, categorie: "bracelet", stock: 0, image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500" },
-  { id: 20, nom: "Montre Femme Dorée", prix: 10000, categorie: "autre", stock: 4, image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500" }
-];
-function getTousProduits() { let mes = JSON.parse(localStorage.getItem("mesProduits")) || []; return produitsBase.concat(mes); }
-function getStock(p) { let s = JSON.parse(localStorage.getItem("stocksABLAVI")) || {}; if (s[p.id] !== undefined) return s[p.id]; return p.stock; }
-function setStock(id, val) { let s = JSON.parse(localStorage.getItem("stocksABLAVI")) || {}; s[id] = val; localStorage.setItem("stocksABLAVI", JSON.stringify(s)); afficherAdmin(); afficherDashboard(); }
-function verifierMdp() { if (document.getElementById("mdp").value === "ablavi") { document.getElementById("login").style.display = "none"; document.getElementById("admin").style.display = "block"; afficherDashboard(); afficherAdmin(); afficherCommandes(); afficherMesProduits(); afficherPromos(); } else alert("Mot de passe incorrect ! C'est : ablavi"); }
-function montrerOnglet(nom, btn) { ["dashboard", "stock", "commandes", "ajout", "promos"].forEach(o => { document.getElementById("onglet-" + o).style.display = o === nom ? "block" : "none"; }); document.querySelectorAll(".onglet").forEach(b => b.classList.remove("actif")); if (btn) btn.classList.add("actif"); if (nom === "dashboard") afficherDashboard(); if (nom === "commandes") afficherCommandes(); if (nom === "promos") afficherPromos(); }
-function afficherDashboard() { let commandes = JSON.parse(localStorage.getItem("commandes")) || []; let tous = getTousProduits(); let total = commandes.reduce((s, x) => s + x.total, 0); document.getElementById("dash-ventes").textContent = total + " F"; document.getElementById("dash-commandes").textContent = commandes.length; document.getElementById("dash-produits").textContent = tous.length; document.getElementById("dash-epuises").textContent = tous.filter(p => getStock(p) === 0).length; document.getElementById("nb-commandes").textContent = commandes.length; let compteur = {}; commandes.forEach(c => (c.articles || []).forEach(a => { let nom = a.split(" x")[0]; let qte = parseInt(a.split(" x")[1]) || 1; compteur[nom] = (compteur[nom] || 0) + qte; })); let top = Object.entries(compteur).sort((a, b) => b[1] - a[1])[0]; document.getElementById("top-produit").innerHTML = top ? `🏆 <b>${top[0]}</b> - ${top[1]} vendu(s)` : "Aucune vente pour le moment"; document.getElementById("dernieres-commandes").innerHTML = commandes.length === 0 ? "Aucune commande" : commandes.slice(-3).reverse().map(c => `<p>• ${c.numero} - ${c.nom} - <b>${c.total} F</b> - ${c.statut}</p>`).join(""); }
-function afficherAdmin() { let tous = getTousProduits(); let zone = document.getElementById("liste-admin"); zone.innerHTML = ""; tous.forEach(p => { let stock = getStock(p); let classe = stock === 0 ? "stock rouge" : "stock vert"; let texte = stock === 0 ? "❌ ÉPUISÉ" : "✅ " + stock + " en stock"; zone.innerHTML += `<div class="carte"><img src="${p.image}"><div class="info"><strong>${p.nom}</strong><br><span class="${classe}">${texte}</span><br><small>${p.prix} F CFA</small></div><div style="text-align:center;"><button class="moins" onclick="setStock(${p.id}, ${Math.max(0, stock - 1)})">-</button><input type="number" value="${stock}" class="input-stock-admin" onchange="setStock(${p.id}, parseInt(this.value) || 0)"><button class="plus" onclick="setStock(${p.id}, ${stock + 1})">+</button><br><button class="restock" onclick="setStock(${p.id}, 10)">Restocker +10</button></div></div>`; }); }
-function afficherCommandes() { let commandes = JSON.parse(localStorage.getItem("commandes")) || []; document.getElementById("nb-commandes").textContent = commandes.length; let zone = document.getElementById("liste-commandes"); if (commandes.length === 0) { zone.innerHTML = "<p style='text-align:center; background:white; padding:20px; border-radius:12px;'>Aucune commande pour le moment.</p>"; return; } let total = commandes.reduce((s, x) => s + x.total, 0); zone.innerHTML = `<p style="text-align:center; background:#E8F5E9; padding:12px; border-radius:12px;"><strong>💰 Total : ${total} F CFA</strong> | ${commandes.length} commandes</p>` + commandes.slice().reverse().map((c, idxRev) => { let index = commandes.length - 1 - idxRev; let couleur = c.statut === "Livrée" ? "Livree" : c.statut === "En cours de livraison" ? "EnCours" : "Preparation"; return `<div class="commande"><div style="display:flex; justify-content:space-between;"><strong>${c.numero}</strong><span class="badge ${couleur}">${c.statut || "En préparation"}</span></div><p>👤 <b>${c.nom}</b><br>📱 ${c.whatsapp}<br>📍 ${c.commune}<br>💳 ${c.mode} ${c.promo ? " | 🎁 Promo: " + c.promo : ""}</p><p>🛍️ ${(c.articles || []).join("<br>")}</p><p><strong>Total : ${c.total} F CFA</strong></p><select onchange="changerStatut(${index}, this.value)"><option ${c.statut === "En préparation" ? "selected" : ""}>En préparation</option><option ${c.statut === "En cours de livraison" ? "selected" : ""}>En cours de livraison</option><option ${c.statut === "Livrée" ? "selected" : ""}>Livrée</option></select><div class="ligne-flex"><a href="https://wa.me/225${c.whatsapp.replace(/\s/g, '').replace(/^0/, '')}" target="_blank" class="btn-whatsapp-admin">💬 WhatsApp</a><button onclick="supprimerCommande(${index})" class="btn-supprimer">🗑️</button></div></div>`; }).join(""); }
-function changerStatut(index, val) { let cs = JSON.parse(localStorage.getItem("commandes")) || []; cs[index].statut = val; localStorage.setItem("commandes", JSON.stringify(cs)); afficherCommandes(); afficherDashboard(); }
-function supprimerCommande(index) { if (!confirm("Supprimer cette commande ?")) return; let cs = JSON.parse(localStorage.getItem("commandes")) || []; cs.splice(index, 1); localStorage.setItem("commandes", JSON.stringify(cs)); afficherCommandes(); afficherDashboard(); }
-function ajouterProduit() { let nom = document.getElementById("new-nom").value.trim(); let prix = parseInt(document.getElementById("new-prix").value); let cat = document.getElementById("new-cat").value; let stock = parseInt(document.getElementById("new-stock").value) || 10; let image = document.getElementById("new-image").value.trim() || "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500"; if (!nom || !prix) { alert("Mets le nom et le prix !"); return; } let mes = JSON.parse(localStorage.getItem("mesProduits")) || []; let nouvelId = Date.now(); mes.push({ id: nouvelId, nom: nom, prix: prix, categorie: cat, stock: stock, image: image }); localStorage.setItem("mesProduits", JSON.stringify(mes)); alert("✅ " + nom + " ajouté ! Va voir sur la boutique, il est déjà là."); document.getElementById("new-nom").value = ""; document.getElementById("new-prix").value = ""; document.getElementById("new-image").value = ""; afficherMesProduits(); afficherAdmin(); afficherDashboard(); }
-function afficherMesProduits() { let mes = JSON.parse(localStorage.getItem("mesProduits")) || []; let zone = document.getElementById("liste-mes-produits"); if (mes.length === 0) { zone.innerHTML = "<p>Aucun produit ajouté pour le moment.</p>"; return; } zone.innerHTML = mes.map((p, i) => `<div class="carte"><img src="${p.image}"><div class="info"><strong>${p.nom}</strong><br>${p.prix} F - Stock: ${getStock(p)}</div><button onclick="supprimerProduit(${i})" class="btn-supprimer">Supprimer</button></div>`).join(""); }
-function supprimerProduit(index) { if (!confirm("Supprimer ce produit ?")) return; let mes = JSON.parse(localStorage.getItem("mesProduits")) || []; mes.splice(index, 1); localStorage.setItem("mesProduits", JSON.stringify(mes)); afficherMesProduits(); afficherAdmin(); afficherDashboard(); }
-function creerPromo() { let code = document.getElementById("promo-code").value.trim().toUpperCase(); let type = document.getElementById("promo-type").value; let valeur = parseInt(document.getElementById("promo-valeur").value); if (!code || !valeur) { alert("Mets le code et la valeur !"); return; } let promos = JSON.parse(localStorage.getItem("promosABLAVI")) || []; promos.push({ code: code, type: type, valeur: valeur, actif: true }); localStorage.setItem("promosABLAVI", JSON.stringify(promos)); alert("🎁 Code " + code + " créé !"); document.getElementById("promo-code").value = ""; document.getElementById("promo-valeur").value = ""; afficherPromos(); }
-function afficherPromos() { let promos = JSON.parse(localStorage.getItem("promosABLAVI")) || []; let zone = document.getElementById("liste-promos"); if (promos.length === 0) { zone.innerHTML = "<p style='text-align:center;'>Aucun code promo. Crée ton premier code ci-dessus.</p>"; return; } zone.innerHTML = promos.map((p, i) => { let texte = p.type === "pourcent" ? p.valeur + "% de réduction" : p.valeur + " F de réduction"; return `<div class="promo-card"><div><strong>🎁 ${p.code}</strong><br><small>${texte} - ${p.actif ? "✅ Actif" : "❌ Inactif"}</small></div><div><button onclick="togglePromo(${i})" style="background:${p.actif ? "#ff9800" : "#4CAF50"}; color:white;">${p.actif ? "Désactiver" : "Activer"}</button> <button onclick="supprimerPromo(${i})" class="btn-supprimer">X</button></div></div>`; }).join(""); }
-function togglePromo(i) { let promos = JSON.parse(localStorage.getItem("promosABLAVI")) || []; promos[i].actif = !promos[i].actif; localStorage.setItem("promosABLAVI", JSON.stringify(promos)); afficherPromos(); }
-function supprimerPromo(i) { if (!confirm("Supprimer ce code ?")) return; let promos = JSON.parse(localStorage.getItem("promosABLAVI")) || []; promos.splice(i, 1); localStorage.setItem("promosABLAVI", JSON.stringify(promos)); afficherPromos(); }
+// ADMIN - VERSION VIDE
+// On a tout effacé. Aucun produit en dur, aucun produit de test.
+
+const MDP = "ablavi123"; // <-- Si ton mot de passe est différent, change-le ici
+
+let produits = []; // VIDE
+let commandes = []; // VIDE
+let promos = [];
+
+// On efface aussi les anciens produits qui étaient cachés dans le navigateur
+localStorage.removeItem("produits");
+localStorage.removeItem("ablavi_produits");
+localStorage.removeItem("mesProduits");
+localStorage.removeItem("stock");
+localStorage.setItem("ablavi_promos", "[]");
+
+function verifierMdp(){
+  let mdp = document.getElementById("mdp").value;
+  if(mdp === MDP){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("admin").classList.remove("admin-cache");
+    mettreAJourDashboard();
+    afficherStock();
+    afficherCommandes();
+    afficherMesProduits();
+    afficherPromos();
+  } else {
+    alert("Mot de passe incorrect");
+  }
+}
+
+function montrerOnglet(nom, btn){
+  document.querySelectorAll(".onglet").forEach(b=>b.classList.remove("actif"));
+  if(btn) btn.classList.add("actif");
+  ["dashboard","stock","commandes","ajout","promos"].forEach(id=>{
+    document.getElementById("onglet-"+id).classList.add("onglet-cache");
+  });
+  document.getElementById("onglet-"+nom).classList.remove("onglet-cache");
+  if(nom==="stock") afficherStock();
+  if(nom==="commandes") afficherCommandes();
+  if(nom==="ajout") afficherMesProduits();
+  if(nom==="promos") afficherPromos();
+}
+
+function mettreAJourDashboard(){
+  // Tout est calculé depuis la liste vide = 0 partout
+  let totalVentes = 0;
+  document.getElementById("dash-ventes").textContent = totalVentes + " F";
+  document.getElementById("dash-commandes").textContent = commandes.length;
+  document.getElementById("dash-produits").textContent = produits.length; // = 0
+  document.getElementById("dash-epuises").textContent = 0; // = 0
+  document.getElementById("nb-commandes").textContent = commandes.length;
+  document.getElementById("top-produit").textContent = "Aucune vente pour le moment";
+  document.getElementById("dernieres-commandes").innerHTML = "Aucune commande";
+}
+
+function afficherStock(){
+  let zone = document.getElementById("liste-admin");
+  if(!zone) return;
+  zone.innerHTML = "<p>Stock vide. On va lier avec le Sheet après.</p>";
+}
+
+function afficherMesProduits(){
+  let zone = document.getElementById("liste-mes-produits");
+  if(!zone) return;
+  zone.innerHTML = "<p>Aucun produit.</p>";
+}
+
+function afficherCommandes(){
+  let zone = document.getElementById("liste-commandes");
+  if(!zone) return;
+  zone.innerHTML = "<p>Aucune commande</p>";
+}
+
+function ajouterProduit(){
+  alert("On a tout effacé. On va lier avec le Sheet d'abord, après tu pourras ajouter.");
+}
+
+function creerPromo(){
+  alert("On va lier avec le Sheet d'abord.");
+}
+
+function afficherPromos(){
+  let zone = document.getElementById("liste-promos");
+  if(!zone) return;
+  zone.innerHTML = "<p>Aucune promo</p>";
+}
