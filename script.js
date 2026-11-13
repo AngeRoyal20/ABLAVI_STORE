@@ -82,9 +82,10 @@ function mettreAJourPanier(){
   let elNb = document.getElementById("nb-panier");
   if(elNb) elNb.textContent = panier.reduce((a,b)=>a+b.qte,0);
   let sousTotal = panier.reduce((a,b)=>a + Number(b.prix)*b.qte, 0);
-  let livraison = sousTotal>0 ? 1000 : 0;
+  // ===== CORRIGÉ : PLUS DE LIVRAISON, TOTAL = PRODUITS - RÉDUCTION =====
+  let livraison = 0;
   let reduction = promoAppliquee ? Math.round(sousTotal * promoAppliquee) : 0;
-  let total = sousTotal + livraison - reduction;
+  let total = sousTotal - reduction;
   let contenu = document.getElementById("contenu-panier");
   if(contenu) contenu.innerHTML = panier.length? panier.map((p,i)=>`<p style="text-align:center">${p.nom} x${p.qte} - ${p.prix*p.qte} F CFA <button onclick="retirerPanier(${i})">✕</button></p>`).join("") : "<p style='text-align:center'>Ton panier est vide</p>";
   let set = (id, val)=>{ let e=document.getElementById(id); if(e) e.textContent = val; };
@@ -98,7 +99,7 @@ function mettreAJourPanier(){
 
 function retirerPanier(i){ panier.splice(i,1); mettreAJourPanier(); }
 
-// ===== CORRIGÉ : PANIER QUI S'OUVRE EN HAUT, PAR-DESSUS TOUT =====
+// ===== PANIER QUI S'OUVRE EN HAUT, PAR-DESSUS TOUT =====
 function afficherPanier(){
   let m = document.getElementById("panier-modal");
   if(!m) return;
