@@ -12,8 +12,8 @@ h1{text-align:center;color:#ff5a8a}
 .onglet-cache{display:none}
 .admin-cache{display:none}
 .carte{background:#fff;border-radius:12px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #0001}
-input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
-.btn-rose{background:#ff5a8a;color:#fff;border:none;padding:14px;border-radius:10px;width:100%;cursor:pointer;font-weight:bold;font-size:15px}
+input{padding:10px;border:1px solid #ddd;border-radius:8px}
+.btn-rose{background:#ff5a8a;color:#fff;border:none;padding:14px;border-radius:10px;width:100%;cursor:pointer;font-weight:bold}
 .btn-plus{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;font-size:18px;background:#ff5a8a;color:#fff}
 .btn-moins{width:34px;height:34px;border-radius:50%;border:1px solid #ddd;cursor:pointer;font-size:18px;background:#fff}
 .btn-suppr{background:red;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
@@ -21,11 +21,10 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
 </style>
 </head>
 <body>
-
 <div id="login" style="max-width:350px;margin:60px auto;text-align:center">
   <h1>ADMIN ABLAVI STORE</h1>
-  <input type="password" id="mdp" placeholder="Mot de passe">
-  <button class="btn-rose" onclick="verifierMdp()">Entrer</button>
+  <input type="password" id="mdp" placeholder="Mot de passe" style="width:100%;box-sizing:border-box">
+  <button class="btn-rose" onclick="verifierMdp()" style="margin-top:10px">Entrer</button>
 </div>
 
 <div id="admin" class="admin-cache">
@@ -35,7 +34,6 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
     <button class="onglet-btn actif" onclick="montrerOnglet('dashboard',this)">📊 Tableau</button>
     <button class="onglet-btn" onclick="montrerOnglet('stock',this)">📦 Stock</button>
     <button class="onglet-btn" onclick="montrerOnglet('commandes',this)">🛍️ Commandes (<span id="nb-commandes">0</span>)</button>
-    <button class="onglet-btn" onclick="montrerOnglet('ajout',this)">➕ Ajouter</button>
     <button class="onglet-btn" onclick="montrerOnglet('promos',this)">🎁 Promos</button>
   </div>
 
@@ -44,12 +42,12 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
     <div class="carte"><b>Commandes :</b> <span id="dash-commandes">0</span></div>
     <div class="carte"><b>Produits en boutique :</b> <span id="dash-produits">0</span></div>
     <div class="carte"><b>Produits épuisés :</b> <span id="dash-epuises">0</span></div>
-    <div class="carte"><b>Produit qui se vend le plus :</b> <span id="top-produit">-</span></div>
     <div class="carte"><b>Dernières commandes :</b><div id="dernieres-commandes">Aucune commande</div></div>
   </div>
 
   <div id="onglet-stock" class="onglet-cache">
-    <h2>📦 Stock</h2>
+    <h2>📦 Stock - Restocker ici</h2>
+    <p>👉 Pour ajouter un NOUVEAU produit, ajoute une ligne directement dans le Google Sheet, onglet Produits.</p>
     <div id="liste-admin">Chargement...</div>
   </div>
 
@@ -58,36 +56,11 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
     <div id="liste-commandes">Chargement...</div>
   </div>
 
-  <div id="onglet-ajout" class="onglet-cache">
-    <h2>➕ Ajouter un nouveau produit</h2>
-    <div class="carte">
-      <!-- ID est automatique, pas besoin de le taper -->
-      <input type="text" id="nom" placeholder="Nom ex: Gloss Rose Pailleté">
-      <input type="number" id="prix" placeholder="Prix ex: 3000">
-      <input type="number" id="ancien-prix" placeholder="Ancien Prix ex: 4000 (pour promo, ou laisse vide)">
-      <select id="categorie">
-        <option value="Bracelets">Bracelets</option>
-        <option value="Boucles">Boucles</option>
-        <option value="Gloss">Gloss</option>
-        <option value="Cheveux">Cheveux</option>
-        <option value="Parfum">Parfum</option>
-        <option value="Autres">Autres</option>
-      </select>
-      <input type="number" id="stock" placeholder="Stock ex: 10">
-      <input type="text" id="image" placeholder="Lien de la photo (URL) - ou laisse vide">
-      <textarea id="description" placeholder="Description du produit"></textarea>
-      <button class="btn-rose" onclick="ajouterProduit()">AJOUTER LE PRODUIT À LA BOUTIQUE ✅</button>
-    </div>
-    <h3>Mes produits</h3>
-    <div id="liste-mes-produits"></div>
-  </div>
-
   <div id="onglet-promos" class="onglet-cache">
     <h2>🎁 Promos</h2>
     <div id="liste-promos"></div>
   </div>
 </div>
-
 <script src="admin.js"></script>
 </body>
 </html>
