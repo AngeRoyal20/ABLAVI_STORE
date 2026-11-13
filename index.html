@@ -5,6 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ABLAVI STORE - Accessoires Femme</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== CORRIGÉ : IMAGES MÊME TAILLE + TEXTE CENTRÉ ===== */
+    #produits{
+      text-align: center;
+    }
+    #produits h2{
+      text-align: center;
+    }
+    #recherche{
+      text-align: center;
+    }
+    #liste-produits{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+      padding: 10px;
+      text-align: center;
+    }
+    .grille{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+    }
+    .carte-produit{
+      background: #fff;
+      border-radius: 15px;
+      padding: 10px;
+      text-align: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .carte-produit img{
+      width: 100% !important;
+      height: 220px !important;
+      object-fit: cover !important;
+      border-radius: 12px;
+      display: block;
+    }
+    .carte-produit h3,
+    .carte-produit p{
+      text-align: center !important;
+      width: 100%;
+      margin: 5px 0;
+    }
+    .carte-produit h3{
+      font-size: 16px;
+      min-height: 22px;
+    }
+    /* Pour les anciennes cartes si ton script.js utilise un autre nom */
+    .carte img{
+      width: 100% !important;
+      height: 220px !important;
+      object-fit: cover !important;
+      border-radius: 12px;
+    }
+    .carte{
+      text-align: center !important;
+    }
+    @media (max-width: 600px){
+      #liste-produits, .grille{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 8px;
+      }
+      .carte-produit img{
+        height: 160px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -108,7 +181,7 @@
         <h4>CATÉGORIES POPULAIRES</h4>
         <a href="#" onclick="filtrer('gloss'); return false;">Gloss</a>
         <a href="#" onclick="filtrer('maquillage'); return false;">Maquillage</a>
-        <a href="#" onclick="filtrer('fleur'); return false;"></a>
+        <a href="#" onclick="filtrer('skin care'); return false;">skin care</a>
         <a href="#" onclick="filtrer('sac'); return false;">Sacs</a>
           <a href="#" onclick="filtrer('accessoire de cheveux'); return false;">accessoires de cheveux</a>
       </div>
