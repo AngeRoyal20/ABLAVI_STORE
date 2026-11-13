@@ -84,7 +84,7 @@ function ajouterPanier(id){
   quantites[id] = 0; // On remet à 0 après ajout
   mettreAJourPanier();
   afficherProduits(); // Pour remettre l'affichage à 0
-  document.getElementById("panier-modal").classList.remove("modal-cache");
+  // CORRIGÉ : On n'ouvre PLUS le panier tout seul, il reste caché dans l'onglet Panier
 }
 
 function mettreAJourPanier(){
