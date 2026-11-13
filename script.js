@@ -11,7 +11,7 @@ const PRODUITS_SECOURS = [];
 
 async function chargerProduits(){
   try{
-    let r = await fetch(API);
+    let r = await fetch(API + "?t=" + Date.now());
     let data = await r.json();
     // CORRIGÉ : Apps Script renvoie {produits, commandes} et plus un tableau seul
     if(data && data.produits && data.produits.length > 0){ tousProduits = data.produits; }
@@ -25,16 +25,16 @@ async function chargerProduits(){
 function afficherProduits(){
   let zone = document.getElementById("liste-produits");
   if(!zone) return;
-  if(!produitsAffiches.length){ zone.innerHTML = "<p>Aucun produit pour le moment.</p>"; return; }
+  if(!produitsAffiches.length){ zone.innerHTML = "<p style='text-align:center'>Aucun produit pour le moment.</p>"; return; }
   zone.innerHTML = produitsAffiches.map(p=>{
     let qte = quantites[p.id] || 0;
     return `
-    <div class="carte-produit">
-      <img src="${p.image}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/300x300?text=ABLAVI'">
-      <h3>${p.nom}</h3>
-      <p>${p.description||""}</p>
-      <p><strong>${p.prix} F CFA</strong> ${p.ancienPrix? `<s>${p.ancienPrix} F CFA</s>`: ""}</p>
-      <p style="font-size:12px;color:${p.stock>0?'green':'red'}">${p.stock>0? 'En stock : '+p.stock : 'Rupture'}</p>
+    <div class="carte-produit" style="text-align:center; display:flex; flex-direction:column; align-items:center; background:#fff; border-radius:15px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08); overflow:hidden;">
+      <img src="${p.image}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/300x300?text=ABLAVI'" style="width:100% !important; height:220px !important; object-fit:cover !important; border-radius:12px; display:block;">
+      <h3 style="text-align:center; width:100%; margin:8px 0 5px; font-size:16px;">${p.nom}</h3>
+      <p style="text-align:center; width:100%; margin:5px 0;">${p.description||""}</p>
+      <p style="text-align:center; width:100%; margin:5px 0;"><strong>${p.prix} F CFA</strong> ${p.ancienPrix? `<s>${p.ancienPrix} F CFA</s>`: ""}</p>
+      <p style="text-align:center; width:100%; margin:5px 0; font-size:12px;color:${p.stock>0?'green':'red'}">${p.stock>0? 'En stock : '+p.stock : 'Rupture'}</p>
       <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin:10px 0;">
         <button onclick="changerQte('${p.id}', -1)" style="width:35px; height:35px; border-radius:50%; border:1px solid #ff69b4; background:#fff; color:#ff69b4; font-size:20px; font-weight:bold; cursor:pointer;">-</button>
         <span id="qte-${p.id}" style="font-size:18px; font-weight:bold; min-width:25px; text-align:center;">${qte}</span>
