@@ -4,8 +4,7 @@ let produits = [];
 let commandes = [];
 
 function verifierMdp(){
-  let mdp = document.getElementById("mdp").value;
-  if(mdp === MDP){
+  if(document.getElementById("mdp").value === MDP){
     document.getElementById("login").style.display = "none";
     document.getElementById("admin").classList.remove("admin-cache");
     chargerTout();
@@ -13,21 +12,18 @@ function verifierMdp(){
 }
 
 function montrerOnglet(nom, btn){
-  document.querySelectorAll(".onglet").forEach(b=>b.classList.remove("actif"));
+  document.querySelectorAll(".onglet-btn").forEach(b=>b.classList.remove("actif"));
   if(btn) btn.classList.add("actif");
   ["dashboard","stock","commandes","ajout","promos"].forEach(id=>{
-    let el = document.getElementById("onglet-"+id);
-    if(el) el.classList.add("onglet-cache");
+    document.getElementById("onglet-"+id).classList.add("onglet-cache");
   });
-  let cible = document.getElementById("onglet-"+nom);
-  if(cible) cible.classList.remove("onglet-cache");
+  document.getElementById("onglet-"+nom).classList.remove("onglet-cache");
 }
 
 async function chargerTout(){
   try{
     let r = await fetch(API);
     let data = await r.json();
-    // Nouveau format : {produits, commandes} OU ancien format : tableau
     if(Array.isArray(data)){ produits = data; commandes = []; }
     else { produits = data.produits || []; commandes = data.commandes || []; }
   }catch(e){ produits=[]; commandes=[]; }
@@ -40,93 +36,79 @@ async function chargerTout(){
   set("dash-produits", produits.length);
   set("dash-epuises", epuises);
   set("nb-commandes", commandes.length);
-  set("top-produit", produits.length ? produits[0].nom : "Aucun produit");
-  
+  set("top-produit", produits.length ? produits[0].nom : "-");
   let der = document.getElementById("dernieres-commandes");
-  if(der){
-    if(!commandes.length) der.innerHTML = "Aucune commande";
-    else der.innerHTML = commandes.slice(-3).reverse().map(c=>`<p>${c.idCommande} - ${c.nomClient} - ${c.total} F</p>`).join("");
-  }
+  if(der) der.innerHTML = commandes.length ? commandes.slice(-3).reverse().map(c=>`<p>${c.idCommande} - ${c.nomClient} - ${c.total} F</p>`).join("") : "Aucune commande";
   afficherStock();
   afficherCommandes();
   afficherMesProduits();
 }
 
-// ===== STOCK AVEC + / - =====
+// Envoi corrigé pour Google : text/plain sinon POST bloqué
+async function envoyer(data){
+  await fetch(API, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(data)});
+}
+
 function afficherStock(){
   let zone = document.getElementById("liste-admin");
   if(!zone) return;
   if(!produits.length){ zone.innerHTML="<p>Stock vide.</p>"; return; }
   zone.innerHTML = produits.map(p=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #eee;padding:10px;margin:5px 0;border-radius:8px;flex-wrap:wrap;gap:8px">
-      <div><b>${p.nom}</b><br>${p.prix} F - ${p.categorie}</div>
+    <div class="carte" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div><b>${p.nom}</b><br>${p.prix} F - ${p.categorie}<br><small>ID: ${p.id}</small></div>
       <div style="display:flex;align-items:center;gap:6px">
-        <button onclick="changerStock('${p.id}', -1)" style="width:32px;height:32px;border-radius:50%;border:1px solid #ddd;cursor:pointer;font-size:18px">-</button>
+        <button class="btn-moins" onclick="changerStock('${p.id}', -1)">-</button>
         <b>Stock: ${p.stock}</b>
-        <button onclick="changerStock('${p.id}', 1)" style="width:32px;height:32px;border-radius:50%;background:#ff5a8a;color:#fff;border:none;cursor:pointer;font-size:18px">+</button>
+        <button class="btn-plus" onclick="changerStock('${p.id}', 1)">+</button>
       </div>
-      <button onclick="supprimerProduit('${p.id}')" style="background:red;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer">Supprimer</button>
+      <button class="btn-restock" onclick="changerStock('${p.id}', 10)">Restocker +10</button>
+      <button class="btn-suppr" onclick="supprimerProduit('${p.id}')">Supprimer</button>
     </div>`).join("");
 }
 
 async function changerStock(id, delta){
-  await fetch(API,{method:"POST", body: JSON.stringify({type:"updateStock", id, delta})});
-  chargerTout();
+  await envoyer({type:"updateStock", id, delta});
+  // Petite pause pour laisser le Sheet écrire
+  setTimeout(chargerTout, 800);
 }
 
 function afficherMesProduits(){
   let zone = document.getElementById("liste-mes-produits");
-  if(!zone) return;
-  zone.innerHTML = produits.length ? produits.map(p=>`<p>${p.nom} - ${p.stock} en stock</p>`).join("") : "<p>Aucun produit.</p>";
+  if(zone) zone.innerHTML = produits.length ? produits.map(p=>`<p>${p.nom} - ${p.stock} en stock</p>`).join("") : "<p>Aucun produit.</p>";
 }
 
 function afficherCommandes(){
   let zone = document.getElementById("liste-commandes");
   if(!zone) return;
-  if(!commandes.length){ zone.innerHTML="<p>Aucune commande pour le moment</p>"; return; }
-  zone.innerHTML = commandes.map(c=>`<p><b>${c.idCommande}</b> - ${c.nomClient} (${c.telephone})<br>${c.produits} - <b>${c.total} F</b> - ${c.paiement}</p><hr>`).join("");
-}
-
-// ===== AJOUTER - marche même si les id dans admin.html sont différents =====
-function getVal(...ids){
-  for(let id of ids){
-    let el = document.getElementById(id);
-    if(el && el.value) return el.value;
-  }
-  // Cherche par placeholder si pas d'id
-  return "";
+  if(!commandes.length){ zone.innerHTML="<p>Aucune commande</p>"; return; }
+  zone.innerHTML = commandes.map(c=>`<div class="carte"><b>${c.idCommande}</b> - ${c.nomClient} (${c.telephone})<br>${c.produits} - <b>${c.total} F</b> - ${c.paiement}</div>`).join("");
 }
 
 async function ajouterProduit(){
-  let nom = getVal("nom","nouveau-nom","nom-produit") || document.querySelector('#onglet-ajout input[placeholder*="Nom" i]')?.value || "";
-  let prix = getVal("prix","nouveau-prix") || document.querySelectorAll('#onglet-ajout input')[1]?.value || "";
-  let ancienPrix = getVal("ancien-prix","ancienPrix") || 0;
-  let categorie = getVal("categorie","nouvelle-categorie") || document.querySelector('#onglet-ajout select')?.value || "";
-  let stock = getVal("stock","nouveau-stock") || 0;
-  let image = getVal("image","nouvelle-image") || "";
-  let description = getVal("description","nouvelle-description") || "";
+  let nom = document.getElementById("nom").value.trim();
+  let prix = document.getElementById("prix").value;
+  let ancienPrix = document.getElementById("ancien-prix").value || 0;
+  let categorie = document.getElementById("categorie").value;
+  let stock = document.getElementById("stock").value || 0;
+  let image = document.getElementById("image").value;
+  let description = document.getElementById("description").value;
 
-  // Si le formulaire utilise des inputs sans id, on prend dans l'ordre
-  let inputs = document.querySelectorAll('#onglet-ajout input');
-  if(!nom && inputs[0]) nom = inputs[0].value;
-  if(!prix && inputs[1]) prix = inputs[1].value;
+  if(!nom || !prix){ alert("Mets nom et prix"); return; }
 
-  if(!nom || !prix){ alert("Mets au moins le nom et le prix"); return; }
-  await fetch(API,{method:"POST", body: JSON.stringify({type:"ajoutProduit", nom, prix, ancienPrix, categorie, image, description, stock})});
-  alert("Produit ajouté au Sheet !");
-  // Vide les champs
-  document.querySelectorAll('#onglet-ajout input').forEach(i=> i.value="");
-  let ta = document.querySelector('#onglet-ajout textarea'); if(ta) ta.value="";
-  chargerTout();
+  // ID = automatique dans Apps Script avec Date.now()
+  await envoyer({type:"ajoutProduit", nom, prix, ancienPrix, categorie, image, description, stock});
+  alert("Produit ajouté ! Il va apparaître dans le Sheet + sur le site + dans Stock.");
+  ["nom","prix","ancien-prix","stock","image","description"].forEach(id=> document.getElementById(id).value="");
+  setTimeout(chargerTout, 1000);
 }
 
 async function supprimerProduit(id){
-  if(!confirm("Supprimer ce produit ?")) return;
-  await fetch(API,{method:"POST", body: JSON.stringify({type:"supprimerProduit", id})});
-  chargerTout();
+  if(!confirm("Supprimer ?")) return;
+  await envoyer({type:"supprimerProduit", id});
+  setTimeout(chargerTout, 800);
 }
 
-function creerPromo(){ alert("Promos : après."); }
+function creerPromo(){ alert("Promos après."); }
 function afficherPromos(){
   let zone = document.getElementById("liste-promos");
   if(zone) zone.innerHTML="<p>Aucune promo</p>";
