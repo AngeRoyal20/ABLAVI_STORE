@@ -6,22 +6,13 @@
   <title>ABLAVI STORE - Accessoires Femme</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ===== CORRIGÉ : IMAGES MÊME TAILLE + TEXTE CENTRÉ ===== */
-    #produits{
-      text-align: center;
-    }
-    #produits h2{
-      text-align: center;
-    }
-    #recherche{
-      text-align: center;
-    }
+    #produits{ text-align: center; }
+    #produits h2{ text-align: center; }
+    #recherche{ text-align: center; }
     #liste-produits{
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 15px;
-      padding: 10px;
-      text-align: center;
+      gap: 15px; padding: 10px; text-align: center;
     }
     .grille{
       display: grid;
@@ -29,165 +20,85 @@
       gap: 15px;
     }
     .carte-produit{
-      background: #fff;
-      border-radius: 15px;
-      padding: 10px;
+      background: #fff; border-radius: 15px; padding: 10px;
       text-align: center !important;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      overflow: hidden; display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
     }
     .carte-produit img{
-      width: 100% !important;
-      height: 220px !important;
-      object-fit: cover !important;
-      border-radius: 12px;
-      display: block;
+      width: 100% !important; height: 220px !important;
+      object-fit: cover !important; border-radius: 12px; display: block;
     }
-    .carte-produit h3,
-    .carte-produit p{
-      text-align: center !important;
-      width: 100%;
-      margin: 5px 0;
+    .carte-produit h3, .carte-produit p{
+      text-align: center !important; width: 100%; margin: 5px 0;
     }
-    .carte-produit h3{
-      font-size: 16px;
-      min-height: 22px;
-    }
+    .carte-produit h3{ font-size: 16px; min-height: 22px; }
     .carte img{
-      width: 100% !important;
-      height: 220px !important;
-      object-fit: cover !important;
-      border-radius: 12px;
+      width: 100% !important; height: 220px !important;
+      object-fit: cover !important; border-radius: 12px;
     }
-    .carte{
-      text-align: center !important;
-    }
+    .carte{ text-align: center !important; }
     @media (max-width: 600px){
-      #liste-produits, .grille{
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 8px;
-      }
-      .carte-produit img{
-        height: 160px !important;
-      }
+      #liste-produits, .grille{ grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 8px; }
+      .carte-produit img{ height: 160px !important; }
     }
-
-    /* ===== CORRIGÉ : PANIER QUI S'OUVRE EN HAUT, PAR-DESSUS TOUT ===== */
-    .modal-cache{
-      display: none !important;
-    }
+    .modal-cache{ display: none !important; }
     #panier-modal{
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      background: rgba(0,0,0,0.55) !important;
-      z-index: 9999 !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: flex-start !important;
-      padding-top: 15px !important;
-      padding-bottom: 15px !important;
-      overflow-y: auto !important;
+      position: fixed !important; top: 0 !important; left: 0 !important;
+      width: 100% !important; height: 100% !important;
+      background: rgba(0,0,0,0.55) !important; z-index: 9999 !important;
+      display: flex !important; justify-content: center !important; align-items: flex-start !important;
+      padding-top: 15px !important; padding-bottom: 15px !important; overflow-y: auto !important;
     }
-    #panier-modal.modal-cache{
-      display: none !important;
-    }
-    #panier-modal .modal-contenu,
-    #panier-modal .panier-contenu{
-      background: #fff !important;
-      width: 95% !important;
-      max-width: 500px !important;
-      max-height: 92vh !important;
-      overflow-y: auto !important;
-      border-radius: 15px !important;
-      padding: 20px !important;
-      margin: 0 auto !important;
-      position: relative !important;
-      text-align: center;
+    #panier-modal.modal-cache{ display: none !important; }
+    #panier-modal .modal-contenu, #panier-modal .panier-contenu{
+      background: #fff !important; width: 95% !important; max-width: 500px !important;
+      max-height: 92vh !important; overflow-y: auto !important; border-radius: 15px !important;
+      padding: 20px !important; margin: 0 auto !important; position: relative !important; text-align: center;
     }
     #panier-modal .btn-x{
-      position: absolute !important;
-      top: 10px !important;
-      right: 12px !important;
-      z-index: 10 !important;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
+      position: absolute !important; top: 10px !important; right: 12px !important;
+      z-index: 10 !important; background: #fff; border: 1px solid #ddd;
+      border-radius: 50%; width: 32px; height: 32px; cursor: pointer;
     }
     #panier-modal .input-panier{
-      width: 100% !important;
-      box-sizing: border-box;
-      padding: 12px;
-      margin: 6px 0;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      width: 100% !important; box-sizing: border-box;
+      padding: 12px; margin: 6px 0; border: 1px solid #ddd; border-radius: 8px;
     }
     #panier-modal .bas-panier{
-      position: sticky !important;
-      bottom: 0 !important;
-      background: #fff !important;
-      padding: 15px 0 5px !important;
+      position: sticky !important; bottom: 0 !important;
+      background: #fff !important; padding: 15px 0 5px !important;
     }
     #panier-modal .btn-commander{
-      width: 100% !important;
-      padding: 15px !important;
-      font-size: 16px !important;
-      background: #ff69b4 !important;
-      color: #fff !important;
-      border: none !important;
-      border-radius: 10px !important;
-      font-weight: bold !important;
-      cursor: pointer !important;
+      width: 100% !important; padding: 15px !important; font-size: 16px !important;
+      background: #ff69b4 !important; color: #fff !important; border: none !important;
+      border-radius: 10px !important; font-weight: bold !important; cursor: pointer !important;
     }
     #panier-modal .btn-fermer{
-      width: 100% !important;
-      padding: 12px !important;
-      margin-top: 8px !important;
-      background: #f1f1f1 !important;
-      border: none !important;
-      border-radius: 10px !important;
-      cursor: pointer !important;
+      width: 100% !important; padding: 12px !important; margin-top: 8px !important;
+      background: #f1f1f1 !important; border: none !important; border-radius: 10px !important; cursor: pointer !important;
     }
-    /* Conditions aussi en haut */
     #conditions-modal{
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      background: rgba(0,0,0,0.55) !important;
-      z-index: 10000 !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: flex-start !important;
-      padding-top: 30px !important;
-      overflow-y: auto !important;
+      position: fixed !important; top: 0 !important; left: 0 !important;
+      width: 100% !important; height: 100% !important;
+      background: rgba(0,0,0,0.55) !important; z-index: 10000 !important;
+      display: flex !important; justify-content: center !important; align-items: flex-start !important;
+      padding-top: 30px !important; overflow-y: auto !important;
     }
-    #conditions-modal.modal-cache{
-      display: none !important;
-    }
+    #conditions-modal.modal-cache{ display: none !important; }
     #conditions-modal .modal-contenu{
-      background: #fff !important;
-      width: 95% !important;
-      max-width: 500px !important;
-      border-radius: 15px !important;
-      padding: 20px !important;
+      background: #fff !important; width: 95% !important; max-width: 500px !important;
+      border-radius: 15px !important; padding: 20px !important;
     }
+    .total-panier-box{
+      background: #fff0f6; border-radius: 12px; padding: 12px; margin: 10px 0;
+    }
+    .total-panier-box p{ font-size: 19px; margin: 0; }
   </style>
 </head>
 <body>
 
-  <!-- ====BANDEAU ===== -->
 <div class="bandeau-defilant">
   <span id="texte-annonce">nous sommes ouverts</span>
 </div>
@@ -232,10 +143,15 @@
       <h2 class="titre-panier">🛍️ Ton Panier</h2>
       <div id="contenu-panier"></div>
       <hr>
-      <p>Sous-total : <span id="sous-total">0</span> F CFA</p>
-      <p>Livraison : <span id="frais-livraison">1000</span> F CFA</p>
+      <!-- CACHÉ POUR NE PAS CASSER LE SCRIPT, MAIS INVISIBLE -->
+      <span id="sous-total" style="display:none">0</span>
+      <span id="frais-livraison" style="display:none">0</span>
+
       <p id="ligne-reduction" class="ligne-reduction">Réduction : -<span id="montant-reduction">0</span> F CFA</p>
-      <p><strong>Total à payer : <span id="total-panier">0</span> F CFA</strong></p>
+
+      <div class="total-panier-box">
+        <p><strong>Total à payer : <span id="total-panier">0</span> F CFA</strong></p>
+      </div>
       <hr>
       <div class="box-promo">
         <label>🎁 Code promo :</label>
@@ -319,5 +235,35 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+  function afficherPanier(){
+    var m = document.getElementById("panier-modal");
+    if(!m) return;
+    m.classList.remove("modal-cache");
+    m.style.display = "flex";
+    m.style.position = "fixed";
+    m.style.top = "0"; m.style.left = "0"; m.style.zIndex = "99999";
+    window.scrollTo(0,0);
+    document.body.style.overflow = "hidden";
+    if(typeof mettreAJourPanier === "function") mettreAJourPanier();
+  }
+  function fermerPanier(){
+    var m = document.getElementById("panier-modal");
+    if(!m) return;
+    m.classList.add("modal-cache");
+    m.style.display = "none";
+    document.body.style.overflow = "";
+  }
+  function voirConditions(){
+    var c = document.getElementById("conditions-modal");
+    if(!c) return;
+    c.classList.remove("modal-cache"); c.style.display = "flex";
+  }
+  function fermerConditions(){
+    var c = document.getElementById("conditions-modal");
+    if(!c) return;
+    c.classList.add("modal-cache"); c.style.display = "none";
+  }
+  </script>
 </body>
 </html>
