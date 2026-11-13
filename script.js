@@ -6,13 +6,8 @@ let panier = [];
 let promoAppliquee = 0;
 let quantites = {}; // <-- Pour garder le nombre choisi sur chaque produit
 
-// Produits de secours - si ton tableau est vide, ton site affiche quand même ça, il ne reste jamais blanc
-const PRODUITS_SECOURS = [
-  {id:1, nom:"Gloss Rose Brillant", prix:3000, ancienPrix:4000, categorie:"gloss", image:"https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500", description:"Brillant, doux et longue tenue", stock:10},
-  {id:2, nom:"Gloss Shine", prix:2500, ancienPrix:3500, categorie:"gloss", image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500", description:"Effet miroir", stock:10},
-  {id:3, nom:"Sac Chic", prix:12000, ancienPrix:15000, categorie:"sac", image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500", description:"Sac élégant", stock:5},
-  {id:4, nom:"Bracelet Doré", prix:5000, ancienPrix:0, categorie:"bracelet", image:"https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500", description:"Bracelet tendance", stock:8}
-];
+// Produits de secours - VIDE : plus de produits de test
+const PRODUITS_SECOURS = [];
 
 async function chargerProduits(){
   try{
