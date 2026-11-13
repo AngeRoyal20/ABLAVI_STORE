@@ -5,7 +5,7 @@ let produitsAffiches = [];
 let panier = [];
 let promoAppliquee = 0;
 let quantites = {};
-let commandeEnCours = false; // ANTI-DOUBLON
+let commandeEnCours = false;
 
 const PRODUITS_SECOURS = [];
 
@@ -13,7 +13,6 @@ async function chargerProduits(){
   try{
     let r = await fetch(API + "?t=" + Date.now());
     let data = await r.json();
-    // CORRIGÉ : Apps Script renvoie {produits, commandes} et plus un tableau seul
     if(data && data.produits && data.produits.length > 0){ tousProduits = data.produits; }
     else if(Array.isArray(data) && data.length > 0){ tousProduits = data; }
     else { tousProduits = PRODUITS_SECOURS; }
@@ -80,24 +79,67 @@ function ajouterPanier(id){
 }
 
 function mettreAJourPanier(){
-  document.getElementById("nb-panier").textContent = panier.reduce((a,b)=>a+b.qte,0);
+  let elNb = document.getElementById("nb-panier");
+  if(elNb) elNb.textContent = panier.reduce((a,b)=>a+b.qte,0);
   let sousTotal = panier.reduce((a,b)=>a + Number(b.prix)*b.qte, 0);
   let livraison = sousTotal>0 ? 1000 : 0;
   let reduction = promoAppliquee ? Math.round(sousTotal * promoAppliquee) : 0;
   let total = sousTotal + livraison - reduction;
-  document.getElementById("contenu-panier").innerHTML = panier.length? panier.map((p,i)=>`<p>${p.nom} x${p.qte} - ${p.prix*p.qte} F CFA <button onclick="retirerPanier(${i})">✕</button></p>`).join("") : "<p>Ton panier est vide</p>";
-  document.getElementById("sous-total").textContent = sousTotal;
-  document.getElementById("frais-livraison").textContent = livraison;
-  document.getElementById("montant-reduction").textContent = reduction;
-  document.getElementById("total-panier").textContent = total;
-  document.getElementById("ligne-reduction").style.display = reduction? "block":"none";
+  let contenu = document.getElementById("contenu-panier");
+  if(contenu) contenu.innerHTML = panier.length? panier.map((p,i)=>`<p style="text-align:center">${p.nom} x${p.qte} - ${p.prix*p.qte} F CFA <button onclick="retirerPanier(${i})">✕</button></p>`).join("") : "<p style='text-align:center'>Ton panier est vide</p>";
+  let set = (id, val)=>{ let e=document.getElementById(id); if(e) e.textContent = val; };
+  set("sous-total", sousTotal);
+  set("frais-livraison", livraison);
+  set("montant-reduction", reduction);
+  set("total-panier", total);
+  let ligne = document.getElementById("ligne-reduction");
+  if(ligne) ligne.style.display = reduction? "block":"none";
 }
 
 function retirerPanier(i){ panier.splice(i,1); mettreAJourPanier(); }
-function afficherPanier(){ document.getElementById("panier-modal").classList.remove("modal-cache"); mettreAJourPanier(); }
-function fermerPanier(){ document.getElementById("panier-modal").classList.add("modal-cache"); }
-function voirConditions(){ document.getElementById("conditions-modal").classList.remove("modal-cache"); }
-function fermerConditions(){ document.getElementById("conditions-modal").classList.add("modal-cache"); }
+
+// ===== CORRIGÉ : PANIER QUI S'OUVRE EN HAUT, PAR-DESSUS TOUT =====
+function afficherPanier(){
+  let m = document.getElementById("panier-modal");
+  if(!m) return;
+  m.classList.remove("modal-cache");
+  m.style.display = "flex";
+  m.style.position = "fixed";
+  m.style.top = "0";
+  m.style.left = "0";
+  m.style.width = "100%";
+  m.style.height = "100%";
+  m.style.zIndex = "99999";
+  m.style.justifyContent = "center";
+  m.style.alignItems = "flex-start";
+  m.style.overflowY = "auto";
+  window.scrollTo(0,0);
+  document.body.style.overflow = "hidden";
+  mettreAJourPanier();
+}
+function fermerPanier(){
+  let m = document.getElementById("panier-modal");
+  if(!m) return;
+  m.classList.add("modal-cache");
+  m.style.display = "none";
+  document.body.style.overflow = "";
+}
+function voirConditions(){
+  let c = document.getElementById("conditions-modal");
+  if(!c) return;
+  c.classList.remove("modal-cache");
+  c.style.display = "flex";
+  c.style.position = "fixed";
+  c.style.top = "0";
+  c.style.left = "0";
+  c.style.zIndex = "100000";
+}
+function fermerConditions(){
+  let c = document.getElementById("conditions-modal");
+  if(!c) return;
+  c.classList.add("modal-cache");
+  c.style.display = "none";
+}
 
 function appliquerPromo(){
   let code = document.getElementById("code-promo").value.trim().toUpperCase();
@@ -108,7 +150,6 @@ function appliquerPromo(){
 }
 
 async function payerCommande(){
-  // ===== ANTI-DOUBLON : si on a déjà cliqué, on bloque =====
   if(commandeEnCours) return;
   if(panier.length === 0){ document.getElementById("message-paiement").textContent="Ton panier est vide"; return; }
 
@@ -135,10 +176,9 @@ async function payerCommande(){
   document.getElementById("message-paiement").textContent = "Commande enregistrée ! Envoie le reçu sur WhatsApp.";
   panier=[]; promoAppliquee=0; mettreAJourPanier();
 
-  // On débloque après 3 secondes pour laisser le temps au Sheet d'enregistrer
   setTimeout(()=>{
     commandeEnCours = false;
-    if(btnPayer){ btnPayer.disabled = false; btnPayer.textContent = "Commander"; }
+    if(btnPayer){ btnPayer.disabled = false; btnPayer.textContent = "ENVOYEZ + LE REÇU DU DEPOT"; }
   }, 3000);
 }
 
