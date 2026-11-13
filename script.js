@@ -30,7 +30,7 @@ function afficherProduits(){
   if(!zone) return;
   if(!produitsAffiches.length){ zone.innerHTML = "<p>Aucun produit pour le moment.</p>"; return; }
   zone.innerHTML = produitsAffiches.map(p=>{
-    let qte = quantites[p.id] || 1;
+    let qte = quantites[p.id] || 0;
     return `
     <div class="carte-produit">
       <img src="${p.image}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/300x300?text=ABLAVI'">
@@ -39,7 +39,7 @@ function afficherProduits(){
       <p><strong>${p.prix} F CFA</strong> ${p.ancienPrix? `<s>${p.ancienPrix} F CFA</s>`: ""}</p>
       <p style="font-size:12px;color:${p.stock>0?'green':'red'}">${p.stock>0? 'En stock : '+p.stock : 'Rupture'}</p>
       
-      <!-- COMPTEUR + ET - REMIS -->
+      <!-- COMPTEUR QUI COMMENCE A 0 -->
       <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin:10px 0;">
         <button onclick="changerQte(${p.id}, -1)" style="width:35px; height:35px; border-radius:50%; border:1px solid #ff69b4; background:#fff; color:#ff69b4; font-size:20px; font-weight:bold; cursor:pointer;">-</button>
         <span id="qte-${p.id}" style="font-size:18px; font-weight:bold; min-width:25px; text-align:center;">${qte}</span>
@@ -51,11 +51,11 @@ function afficherProduits(){
   }).join("");
 }
 
-// NOUVELLE FONCTION POUR LE + ET -
+// FONCTION POUR LE + ET - QUI COMMENCE A 0
 function changerQte(id, delta){
-  let actuelle = quantites[id] || 1;
+  let actuelle = quantites[id] || 0;
   let nouvelle = actuelle + delta;
-  if(nouvelle < 1) nouvelle = 1;
+  if(nouvelle < 0) nouvelle = 0;
   if(nouvelle > 99) nouvelle = 99;
   quantites[id] = nouvelle;
   let span = document.getElementById("qte-"+id);
@@ -77,12 +77,13 @@ function rechercher(){
 function ajouterPanier(id){
   let p = tousProduits.find(x=> x.id==id);
   if(!p) return;
-  let qteChoisie = quantites[id] || 1;
+  let qteChoisie = quantites[id] || 0;
+  if(qteChoisie === 0){ alert("Choisis d'abord la quantité avec +"); return; }
   let exist = panier.find(x=> x.id==id);
   if(exist) exist.qte += qteChoisie; else panier.push({...p, qte: qteChoisie});
-  quantites[id] = 1; // On remet à 1 après ajout
+  quantites[id] = 0; // On remet à 0 après ajout
   mettreAJourPanier();
-  afficherProduits(); // Pour remettre l'affichage à 1
+  afficherProduits(); // Pour remettre l'affichage à 0
   document.getElementById("panier-modal").classList.remove("modal-cache");
 }
 
