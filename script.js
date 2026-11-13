@@ -4,16 +4,18 @@ let tousProduits = [];
 let produitsAffiches = [];
 let panier = [];
 let promoAppliquee = 0;
-let quantites = {}; // <-- Pour garder le nombre choisi sur chaque produit
+let quantites = {};
+let commandeEnCours = false; // ANTI-DOUBLON
 
-// Produits de secours - VIDE : plus de produits de test
 const PRODUITS_SECOURS = [];
 
 async function chargerProduits(){
   try{
     let r = await fetch(API);
     let data = await r.json();
-    if(data && data.length>0){ tousProduits = data; }
+    // CORRIGÉ : Apps Script renvoie {produits, commandes} et plus un tableau seul
+    if(data && data.produits && data.produits.length > 0){ tousProduits = data.produits; }
+    else if(Array.isArray(data) && data.length > 0){ tousProduits = data; }
     else { tousProduits = PRODUITS_SECOURS; }
   }catch(e){ tousProduits = PRODUITS_SECOURS; }
   produitsAffiches = tousProduits;
@@ -33,20 +35,16 @@ function afficherProduits(){
       <p>${p.description||""}</p>
       <p><strong>${p.prix} F CFA</strong> ${p.ancienPrix? `<s>${p.ancienPrix} F CFA</s>`: ""}</p>
       <p style="font-size:12px;color:${p.stock>0?'green':'red'}">${p.stock>0? 'En stock : '+p.stock : 'Rupture'}</p>
-      
-      <!-- COMPTEUR QUI COMMENCE A 0 -->
       <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin:10px 0;">
-        <button onclick="changerQte(${p.id}, -1)" style="width:35px; height:35px; border-radius:50%; border:1px solid #ff69b4; background:#fff; color:#ff69b4; font-size:20px; font-weight:bold; cursor:pointer;">-</button>
+        <button onclick="changerQte('${p.id}', -1)" style="width:35px; height:35px; border-radius:50%; border:1px solid #ff69b4; background:#fff; color:#ff69b4; font-size:20px; font-weight:bold; cursor:pointer;">-</button>
         <span id="qte-${p.id}" style="font-size:18px; font-weight:bold; min-width:25px; text-align:center;">${qte}</span>
-        <button onclick="changerQte(${p.id}, 1)" style="width:35px; height:35px; border-radius:50%; border:none; background:#ff69b4; color:#fff; font-size:20px; font-weight:bold; cursor:pointer;">+</button>
+        <button onclick="changerQte('${p.id}', 1)" style="width:35px; height:35px; border-radius:50%; border:none; background:#ff69b4; color:#fff; font-size:20px; font-weight:bold; cursor:pointer;">+</button>
       </div>
-
-      <button onclick="ajouterPanier(${p.id})" ${p.stock<=0?'disabled':''} style="width:100%; padding:12px; background:#ff69b4; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Ajouter au panier</button>
+      <button onclick="ajouterPanier('${p.id}')" ${p.stock<=0?'disabled':''} style="width:100%; padding:12px; background:#ff69b4; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Ajouter au panier</button>
     </div>`;
   }).join("");
 }
 
-// FONCTION POUR LE + ET - QUI COMMENCE A 0
 function changerQte(id, delta){
   let actuelle = quantites[id] || 0;
   let nouvelle = actuelle + delta;
@@ -70,16 +68,15 @@ function rechercher(){
 }
 
 function ajouterPanier(id){
-  let p = tousProduits.find(x=> x.id==id);
+  let p = tousProduits.find(x=> String(x.id)==String(id));
   if(!p) return;
   let qteChoisie = quantites[id] || 0;
   if(qteChoisie === 0){ alert("Choisis d'abord la quantité avec +"); return; }
-  let exist = panier.find(x=> x.id==id);
+  let exist = panier.find(x=> String(x.id)==String(id));
   if(exist) exist.qte += qteChoisie; else panier.push({...p, qte: qteChoisie});
-  quantites[id] = 0; // On remet à 0 après ajout
+  quantites[id] = 0;
   mettreAJourPanier();
-  afficherProduits(); // Pour remettre l'affichage à 0
-  // CORRIGÉ : On n'ouvre PLUS le panier tout seul, il reste caché dans l'onglet Panier
+  afficherProduits();
 }
 
 function mettreAJourPanier(){
@@ -111,23 +108,38 @@ function appliquerPromo(){
 }
 
 async function payerCommande(){
-  let nom = document.getElementById("client-nom").value;
-  let tel = document.getElementById("client-whatsapp").value;
-  let commune = document.getElementById("client-commune").value;
+  // ===== ANTI-DOUBLON : si on a déjà cliqué, on bloque =====
+  if(commandeEnCours) return;
+  if(panier.length === 0){ document.getElementById("message-paiement").textContent="Ton panier est vide"; return; }
+
+  let nom = document.getElementById("client-nom").value.trim();
+  let tel = document.getElementById("client-whatsapp").value.trim();
+  let commune = document.getElementById("client-commune").value.trim();
   let paiement = document.querySelector('input[name="paiement"]:checked')?.value || "Orange Money";
   let accepte = document.getElementById("accepter-conditions").checked;
   if(!nom || !tel || !commune){ document.getElementById("message-paiement").textContent="Remplis nom, WhatsApp et commune"; return; }
   if(!accepte){ document.getElementById("message-paiement").textContent="Coche les conditions"; return; }
-  let total = document.getElementById("total-panier").textContent;
+
+  commandeEnCours = true;
+  let btnPayer = document.querySelector('button[onclick*="payerCommande"]');
+  if(btnPayer){ btnPayer.disabled = true; btnPayer.textContent = "Envoi en cours..."; }
+
+  let total = Number(document.getElementById("total-panier").textContent) || 0;
   let idCmd = "ABL" + Date.now();
   let produitsTxt = panier.map(p=> p.nom+" x"+p.qte).join(", ");
   try{
-    await fetch(API,{method:"POST", body: JSON.stringify({type:"commande", idCommande:idCmd, nomClient:nom, telephone:tel, produits:produitsTxt, total:total, paiement:paiement, adresse:commune})});
+    await fetch(API,{method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify({type:"commande", idCommande:idCmd, nomClient:nom, telephone:tel, produits:produitsTxt, total:total, paiement:paiement, adresse:commune})});
   }catch(e){}
   let msg = `Bonjour ABLAVI STORE! Je veux commander:%0A%0ACommande ${idCmd}%0A${produitsTxt}%0A%0ANom: ${nom}%0ATel: ${tel}%0ACommune: ${commune}%0APaiement: ${paiement}%0ATotal: ${total} F CFA`;
   window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
   document.getElementById("message-paiement").textContent = "Commande enregistrée ! Envoie le reçu sur WhatsApp.";
   panier=[]; promoAppliquee=0; mettreAJourPanier();
+
+  // On débloque après 3 secondes pour laisser le temps au Sheet d'enregistrer
+  setTimeout(()=>{
+    commandeEnCours = false;
+    if(btnPayer){ btnPayer.disabled = false; btnPayer.textContent = "Commander"; }
+  }, 3000);
 }
 
 chargerProduits();
