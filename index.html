@@ -5,6 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ABLAVI STORE - Accessoires Femme</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* === FIX ABLAVI : TOUTES LES IMAGES MEME TAILLE === */
+    #liste-produits.grille{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+      gap:20px;
+      align-items:stretch;
+    }
+    #liste-produits > div,
+    #liste-produits .carte,
+    #liste-produits .produit,
+    #liste-produits .product-card,
+    #liste-produits .card{
+      display:flex !important;
+      flex-direction:column !important;
+      overflow:hidden !important;
+      height:100% !important;
+      background:#fff;
+      border-radius:12px;
+    }
+    /* L'image elle-même - TOUJOURS 230px */
+    #liste-produits img,
+    #liste-produits .carte img,
+    #liste-produits .produit img,
+    #liste-produits .product-card img,
+    #liste-produits .card img{
+      width:100% !important;
+      height:230px !important;
+      min-height:230px !important;
+      max-height:230px !important;
+      object-fit:cover !important;
+      object-position:center center !important;
+      display:block !important;
+      flex-shrink:0 !important;
+    }
+    /* Si ton JS met l'image en fond */
+    #liste-produits .image-produit,
+    #liste-produits .product-image{
+      width:100% !important;
+      height:230px !important;
+      min-height:230px !important;
+      background-size:cover !important;
+      background-position:center !important;
+      flex-shrink:0 !important;
+    }
+  </style>
 </head>
 <body>
 
